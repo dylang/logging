@@ -17,10 +17,6 @@
         "mail": "dylang@gmail.com",
         "web": "http://github.com/dylang/logging/issues"
     },
-    "dependencies":
-    {
-        "proto": ">=0.1.0"
-    },
     "main": "./lib",
     "engines": { "node": ">=0.2.0" },
     "scripts": { },
