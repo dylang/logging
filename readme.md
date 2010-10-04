@@ -3,6 +3,12 @@
 
   Super sexy console logging.  Now in colour.
 
+
+## Install
+
+     npm install logging
+
+
 ## Usage
 
       var log = require('logging').from(__filename);
