@@ -1,0 +1,30 @@
+{
+    "name": "logging",
+    "version": "2.0.0",
+    "description": "Super sexy logging.  In colour.",
+    "homepage": "http://opowerjobs.com",
+    "author": "Dylan Greene <dylang@gmail.com>",
+    "contributors": [
+        "Dylan Greene <dylang@gmail.com>"
+    ],
+    "repository":
+    {
+        "type": "git",
+        "url": "http://github.com/dylang/logging"
+    },
+    "bugs":
+    {
+        "mail": "dylang@gmail.com",
+        "web": "http://github.com/dylang/logging/issues"
+    },
+    "dependencies":
+    {
+        "proto": ">=0.1.0"
+    },
+    "engines": { "node": ">=0.2.0" },
+    "scripts": { },
+    "licenses" :
+    [
+        { "type" : "MIT", "url" : "http://github.com/isaacs/npm/raw/master/LICENSE" }
+    ]
+}
