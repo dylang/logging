@@ -47,11 +47,6 @@ module.exports = {
 
         ZZZZ();
 
-
-
-
-        log('name', arguments.callee.caller.callee);
-
     },
     
     'no filename': function  (assert) {
