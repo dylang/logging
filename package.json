@@ -1,8 +1,8 @@
 {
     "name": "logging",
-    "version": "2.0.2",
-    "description": "Super sexy logging.  In colour.",
-    "homepage": "http://opowerjobs.com",
+    "version": "2.0.3",
+    "description": "Super sexy color console logging.",
+    "homepage": "http://github.com/dylang/logging",
     "author": "Dylan Greene <dylang@gmail.com>",
     "contributors": [
         "Dylan Greene <dylang@gmail.com>"
