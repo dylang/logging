@@ -1,6 +1,6 @@
 {
     "name": "logging",
-    "version": "2.0.4",
+    "version": "2.0.6",
     "description": "Super sexy color console logging.",
     "homepage": "http://github.com/dylang/logging",
     "author": "Dylan Greene <dylang@gmail.com>",
@@ -17,8 +17,8 @@
         "mail": "dylang@gmail.com",
         "web": "http://github.com/dylang/logging/issues"
     },
-    "main": "./lib",
-    "engines": { "node": ">=0.2.0" },
+    "main": "./lib/index.js",
+    "engines": { "node": ">=0.4.0" },
     "scripts": { },
     "licenses" :
     [
