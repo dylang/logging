@@ -1,4 +1,4 @@
-var log = require('../lib').from(__filename);
+var log = require('../lib/logging').from(__filename);
 
 
 module.exports = {

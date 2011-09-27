@@ -1,7 +1,7 @@
 {
     "name": "logging",
-    "version": "2.0.10",
-    "description": "Super sexy color console logging.",
+    "version": "2.0.11",
+    "description": "Super sexy color console logging with cluster support.",
     "homepage": "http://github.com/dylang/logging",
     "author": "Dylan Greene <dylang@gmail.com>",
     "contributors": [
