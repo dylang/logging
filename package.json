@@ -1,6 +1,6 @@
 {
     "name": "logging",
-    "version": "2.0.11",
+    "version": "2.0.12",
     "description": "Super sexy color console logging with cluster support.",
     "homepage": "http://github.com/dylang/logging",
     "author": "Dylan Greene <dylang@gmail.com>",
@@ -15,7 +15,7 @@
     "bugs":
     {
         "mail": "dylang@gmail.com",
-        "web": "http://github.com/dylang/logging/issues"
+        "url": "http://github.com/dylang/logging/issues"
     },
     "main": "index",
     "engines": { "node": ">=0.4.0" },
