@@ -21,6 +21,9 @@
     "scripts": {
         "test": "nodeunit test"
     },
+    "devDependencies": {
+        "nodeunit": "*"
+    },
     "engines": { "node": ">=0.4.0" },
     "licenses" :
     [

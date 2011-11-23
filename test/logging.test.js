@@ -59,7 +59,7 @@ module.exports = {
     },
     
     'foreach': function  (test) {
-        'use strict';
+        //'use strict';  strict mode is not supported
         ['a', 'b', 'c'].forEach(function(val){
             log(val);
         });
