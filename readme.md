@@ -1,7 +1,7 @@
 
-# Logging
+# Logging  [![Build Status](https://secure.travis-ci.org/dylang/logging.png)](http://travis-ci.org/dylang/logging)
 
-  Super sexy console logging.  Now in colour.
+  Super sexy color console logging with cluster support.
 
 
 ## Install
