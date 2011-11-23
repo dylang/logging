@@ -1,37 +1,45 @@
 var log = require('../lib/logging').from(__filename);
 
+// to run: nodeunit test
 
 module.exports = {
-    'test test': function(assert) {
-        assert.ok(true, 'true is true');
+    'test test': function(test) {
+        test.ok(true, 'true is true');
+        test.done();
     },
 
-    'test log': function(assert) {
+    'test log': function(test) {
         log('test');
-        assert.ok(true, 'true is true');
+        test.ok(true, 'true is true');
+        test.done();
     },
 
-    'log multiple inputs': function(assert) {
+    'log multiple inputs': function(test) {
         log('hello', 'world', 1, 2, 'three');
-        assert.ok(true, 'true is true');
+        test.ok(true, 'true is true');
+        test.done();
     },
 
-    'log array': function(assert) {
+    'log array': function(test) {
         log('array', [1, 2, 3, 'four', 'five', 'six']);
-        assert.ok(true, 'true is true');
+        test.ok(true, 'true is true');
+        test.done();
     },
 
-    'log object': function(assert) {
+    'log object': function(test) {
         log('object', { a: 'apple', b: 'bear', c: ['cookies', 'cake', 'calculators', { abc: 123,  def: 'jhi', klm: true, pqr: false }]});
-        assert.ok(true, 'true is true');
+        test.ok(true, 'true is true');
+        test.done();
     },
 
-    'function name': function function_name(assert) {
+    'function name': function function_name(test) {
         log('function name');
+        test.done();
+
     },
 
 
-    'arguments': function SUPERARGTEST(assert) {
+    'arguments': function SUPERARGTEST(test) {
         function YYYY (aaaa) {
             log('arguments', arguments);
             //log(caller);
@@ -39,6 +47,7 @@ module.exports = {
             log(arguments.callee.caller.name);
             //log(arguments.caller.name);
             log(arguments.callee.name);
+
         }
 
         function ZZZZ() {
@@ -46,12 +55,35 @@ module.exports = {
         }
 
         ZZZZ();
-
+        test.done();
     },
     
-    'no filename': function  (assert) {
-        var noFile = require('../lib');
-        noFile('i don\'t have a filename');
+    'foreach': function  (test) {
+        'use strict';
+        ['a', 'b', 'c'].forEach(function(val){
+            log(val);
+        });
+        test.done();
+
+    },
+
+    'async': function (test) {
+        function A() {
+            log('i have a name');
+            test.done();
+        }
+
+        setTimeout(function(){
+            A();
+        }, 100);
+    },
+
+    'async inline': function (test) {
+
+        setTimeout(function(){
+           log('i have no name');
+            test.done();
+        }, 100);
     }
 
 };

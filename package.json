@@ -18,6 +18,9 @@
         "url": "http://github.com/dylang/logging/issues"
     },
     "main": "index",
+    "scripts": {
+        "test": "nodeunit test"
+    },
     "engines": { "node": ">=0.4.0" },
     "licenses" :
     [
