@@ -27,11 +27,11 @@
   * Color
   * Timestamp
   * Filename
-  * Function Name
+  * Cluster Worker id
   * Inspects arrays, objects, functions - all in color.
-  * Stores history
   * Fast
   * Easy
+  * Used in production on Node Knockout winner [Doodle or Die](http://DoodleOrDie.com).
 
 ## Todo
   * Timezone, 24/12-hour options.
