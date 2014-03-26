@@ -3,11 +3,6 @@ var log = require('../lib/logging').from(__filename);
 // to run: nodeunit test
 
 module.exports = {
-    'test test': function(test) {
-        test.ok(true, 'true is true');
-        test.done();
-    },
-
     'test log': function(test) {
         log('test');
         test.ok(true, 'true is true');
@@ -57,7 +52,7 @@ module.exports = {
         ZZZZ();
         test.done();
     },
-    
+
     'foreach': function  (test) {
         //'use strict';  strict mode is not supported
         ['a', 'b', 'c'].forEach(function(val){
