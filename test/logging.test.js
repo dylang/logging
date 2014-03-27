@@ -1,11 +1,29 @@
-var log = require('../lib/logging').from(__filename);
+var logging = require('../lib/logging');
+var log = logging.from(__filename);
 
 // to run: nodeunit test
 
+var output;
+function out(message) {
+    output.push(message);
+}
+
+function noTimestamp(date) {
+    return "";
+}
+
+var options = {
+    out: out
+};
+
+function color(name, strings) {
+    return " - [\u001b[0;32m" + name + "\u001b[0m] - \u001b[0;37m" + strings.join("\u001b[0m \u001b[0;37m") + "\u001b[0m";
+}
+
 module.exports = {
-    'test test': function(test) {
-        test.ok(true, 'true is true');
-        test.done();
+    setUp: function (done) {
+        output = [];
+        done();
     },
 
     'test log': function(test) {
@@ -38,7 +56,6 @@ module.exports = {
 
     },
 
-
     'arguments': function SUPERARGTEST(test) {
         function YYYY (aaaa) {
             log('arguments', arguments);
@@ -57,7 +74,7 @@ module.exports = {
         ZZZZ();
         test.done();
     },
-    
+
     'foreach': function  (test) {
         //'use strict';  strict mode is not supported
         ['a', 'b', 'c'].forEach(function(val){
@@ -84,6 +101,42 @@ module.exports = {
            log('i have no name');
             test.done();
         }, 100);
+    },
+
+    'timestamp': {
+        'gets called with an instance of Date': function (test) {
+            var date;
+            var log = logging.from("filter", {
+                out: out,
+                timestamp: function (_date) {
+                    date = _date;
+                }
+            });
+
+            log();
+
+            test.ok(date instanceof Date);
+            test.done();
+        }
+    },
+
+    'filter': {
+        'gets called with each message': function (test) {
+            var log = logging.from("filter", {
+                out: out,
+                timestamp: noTimestamp,
+                filter: function (message) {
+                    return message.replace("fail", "pass");
+                }
+            });
+
+            log("fail");
+            log("fail", "fail");
+
+            test.equal(output[0], color("filter", ["pass"]));
+            test.equal(output[1], color("filter", ["pass", "pass"]));
+            test.done();
+        }
     }
 
 };
