@@ -21,6 +21,17 @@
 
       log(1, "2", [ 3, 4 ], { 5: 6 }, function() { return 7; });
 
+## Log level from `env`
+
+      var log = require('logging').from(__filename);
+
+      log.error("This is an error message");
+      log.warn("This is an warn message");
+      log.info("This is an info message");
+      log.debug("This is an debug message");
+
+
+      $ > LOG=2 node application.js
 
 ## Features
 
@@ -32,6 +43,7 @@
   * Fast
   * Easy
   * Used in production on Node Knockout winner [Doodle or Die](http://DoodleOrDie.com).
+  * Log level from `env` (error=1; warn=2; info=3; debug=4)
 
 ## Todo
   * Timezone, 24/12-hour options.
