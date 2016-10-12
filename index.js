@@ -1,1 +1,1 @@
-module.exports = require('./lib/logging');
+module.exports = require('./lib/logging2');
