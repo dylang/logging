@@ -31,13 +31,13 @@ const logger = ({
                 prop: 'yellow',
                 value: 'green',
                 number: 'green',
-                string: 'reset', //
-                date: 'green', //
+                string: 'reset',
+                date: 'green',
                 symbol: 'red',
                 regex: 'red',
                 function: 'blue',
                 error: 'red',
-                boolean: 'yellow', //
+                boolean: 'yellow',
                 label: 'blue',
                 bracket: 'grey',
                 comma: 'grey',
