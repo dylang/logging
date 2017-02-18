@@ -1,6 +1,8 @@
-# Logging  [![Build Status](https://secure.travis-ci.org/dylang/logging.png)](https://travis-ci.org/dylang/logging)
+# Logging  [![Build Status](https://secure.travis-ci.org/dylang/logging.svg)](https://travis-ci.org/dylang/logging)
 
-  Lightweight informative modern console logging.
+> Lightweight informative modern console logging.
+
+[![logging](screenshots/screenshot.png)](screenshots/screenshot.png)
 
 ## Install
 
@@ -12,7 +14,6 @@ yarn add logging
 * Simple.
 * Log levels.
 * Nice coloring.
-* Works in the browser.
 
 ## Usage
 

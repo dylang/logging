@@ -18,7 +18,7 @@
     "example": "babel-node examples/simple.js",
     "prepublish": "npm -s run build",
     "precommit": "npm -s run test",
-    "publish": "np"
+    "np": "np"
   },
   "repository": "http://github.com/dylang/logging",
   "author": "Dylan Greene <dylang@gmail.com>",
