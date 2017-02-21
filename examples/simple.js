@@ -12,6 +12,7 @@ log.debug('set DEBUG=Feature or DEBUG=* to see this one');
 log.info('Interesting');
 log.warn('Hmmm...', 123, false, { details });
 log.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
+log.info('This\nwill\nspan\nmultiple\nlines.');
 
 const obj = { property: {} };
 obj.circularReference = obj;

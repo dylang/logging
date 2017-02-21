@@ -13,6 +13,8 @@ const time = () => {
     return date.toISOString().replace(/.*T(.*)Z/, '$1');
 };
 
+const indentText = (text) => text.replace(/^(?!\s+$)/mg, ' '.repeat(13)).trim();
+
 const logger = ({
                     title,
                     messages,
@@ -45,7 +47,7 @@ const logger = ({
                 key: 'cyan'
             }
         });
-    });
+    }).map(indentText);
     logFunction(gray(time()), `[${title}]`, ...formattedMessages);
 };
 
