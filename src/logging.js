@@ -4,7 +4,7 @@ import {
     red,
     gray
 } from 'chalk';
-import prettyFormat from '@ava/pretty-format';
+import nicelyFormat from 'nicely-format';
 import createDebug from 'debug';
 
 const time = () => {
@@ -24,7 +24,7 @@ const logger = ({
         if (typeof message === 'string') {
             return message;
         }
-        return prettyFormat(message, {
+        return nicelyFormat(message, {
             highlight: true,
             min: true,
             theme: {
