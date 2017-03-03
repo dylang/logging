@@ -4,7 +4,7 @@ import logging from '../src';
 const log = logging('Feature');
 
 const details = { blah: true };
-const err = new Error('foobar');
+const err = new Error('This error is part of the example');
 const context = { userid: 1 };
 const etc = false;
 

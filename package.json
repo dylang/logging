@@ -3,7 +3,7 @@
   "version": "3.1.1",
   "description": "Lightweight informative modern console logging.",
   "main": "lib",
-  "module": "src",
+  "browser": "lib/browser.js",
   "files": [
     "lib",
     "src"
