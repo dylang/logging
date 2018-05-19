@@ -7,8 +7,8 @@ interface CallSite {
 }
 
 const originalPrepareStackTrace = Error.prepareStackTrace;
-
-const permittedCharacters = 30;
+const cwd = process.cwd();
+const permittedCharacters = 60;
 
 export const getFilename = () => {
     Error.prepareStackTrace = (error: any, rawStack: any) => rawStack;
@@ -29,6 +29,12 @@ export const getFilename = () => {
             .split('/')
             .reverse()[0];
 
+    const relativeFilename = path.relative(cwd, filePath);
     const remainder = permittedCharacters - packageName.length - (packageName.length ? 1 : 0);
-    return `${packageName}${shortenedFileName ? chalk.gray('/') : ''}${shortenedFileName.substr(0, remainder)}`;
+    const shortenedName = `${chalk.hex('5b7b8c')(packageName)}${shortenedFileName ? chalk.gray('/') : ''}${chalk.hex('73c1bf')(shortenedFileName.substr(0, remainder))}`;
+    return {
+        packageName,
+        relativeFilename,
+        shortenedName
+    };
 };

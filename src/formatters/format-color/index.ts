@@ -1,2 +1,1 @@
-export {formatColor} from './format-color';
-export {timestamp} from './timestamp';
+export {formatColor, dynamicProgress} from './format-color';

@@ -1,0 +1,21 @@
+{
+  "extends": "tslint-xo",
+  "rules": {
+    "indent": [true, "spaces", 4],
+    "completed-docs": [
+      true,
+      {
+        "methods": {
+          "privacies": [
+            "public"
+          ]
+        },
+        "functions": {
+          "visibilities": [
+            "exported"
+          ]
+        }
+      }
+    ]
+  }
+}

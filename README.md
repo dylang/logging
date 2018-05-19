@@ -14,25 +14,45 @@ yarn add logging
 * Simple.
 * Log levels.
 * Nice coloring.
+* Typescript types.
+* Node and Browser.
 
 ## Usage
 
 ```js
-// or const createLogger = require('logging');  
+// or const createLogger = require('logging').default;  
 import createLogger from 'logging';
 
-const logger = createLogger('FeatureName');
+const log = createLogger('FeatureName');
 
-logger.info('Interesting');
+log.info('Interesting');
 // -> [ Feature ] Interesting
 
-logger.warn('Hmmm...', { details });
+log.warn('Hmmm...', { details });
 // -> [ WARNING Feature ] Hmmm... { details object }
 
-logger.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
+log.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
 // -> [ ERROR Feature ] Not good. Not good at all. { err } { context } ...
 
 // uses the debug module, use DEBUG=* or DEBUG=FeatureName to see these items.
-logger.debug('Interesting');
+log.debug('Interesting');
 // -> [ Feature ] Interesting
 ```
+
+
+```js
+import { createLog, defaultLog, mockLog } from 'logging';
+
+const log = createLog('name of log');
+log.info('some data');
+defaultLog.info('some other data');
+
+
+// strict json for the life of the process
+log.configure({ format: 'json' })
+log.format(({ format, data }) => format === 'json' ? ({
+   name: "any values here will be included with every log entry when using json",
+   ...data
+}) : data)
+```
+

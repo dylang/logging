@@ -1,3 +1,4 @@
-export const writeStdOut = (content: string): void => {
-    console.log(content);
+export const streamStdout = (content: string): void => {
+    process.stdout.write(content);
+    process.stdout.write('\n');
 };

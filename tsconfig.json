@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "pretty": true,
+    "outDir": "lib",
+    "module": "commonjs",
+    "target": "es2017",
+    "lib": ["es2017"],
+    "sourceMap": true,
+    "jsx": "react",
+    "declaration": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "node_modules"
+  ]
+}

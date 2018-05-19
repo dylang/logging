@@ -4,33 +4,18 @@ import * as logSymbols from 'log-symbols';
 import * as timeSpan from 'time-span';
 import * as prettyMs from 'pretty-ms';
 import {clearInterval} from 'timers';
-import {Transform} from 'stream';
 import {getPrefix} from './get-prefix';
+import {getFilename} from './get-filename';
 
 const spinnerFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 const spinnerFramesLength = spinnerFrames.length;
 
-const outStream = new Transform({
-    transform: (data, encoding, callback) => {
-        logUpdate.clear();
-        callback(undefined, data);
-    }
-});
-
-outStream.pipe(process.stdout);
-
-export const logStream = () => {
-    return outStream;
-};
-
-export class Progress {
+export class DynamicProgress {
     private percentage: number;
     private interval: NodeJS.Timer | null;
     private timer: timeSpan.TimeSpanObject | null;
     private message: string | null;
     private prefix: string | null;
-
-    constructor(private label: string) {}
 
     progress(message: string, percentage: number = 0) {
         this.message = message;
@@ -42,19 +27,13 @@ export class Progress {
             this.render();
             return;
         }
-        console.log = (...args: any[]) => {
-            if (this.interval) {
-                logUpdate.clear();
-            }
-            console.warn(...args);
-        };
 
         /*outStream.on('data', () => {
             if (this.interval) {
                 logUpdate.clear();
             }
         });*/
-        this.prefix = getPrefix('', this.label, 'blue');
+        this.prefix = getPrefix() + ' [' + getFilename().shortenedName + '] ';
         this.timer = timeSpan();
         this.interval = setInterval(() => this.render(), 50);
     }
@@ -68,6 +47,7 @@ export class Progress {
         this.timer = null;
         this.message = null;
         this.prefix = null;
+        this.percentage = 0;
     }
 
     private render(text = this.message, symbol: string = '') {
@@ -81,11 +61,11 @@ export class Progress {
         const percentage100 = Math.round(this.percentage * 100);
         const percentage10 = Math.round(this.percentage * 10);
         const progressBar = percentage10 > 0
-            ? `${chalk.bgHsl(32, 100, percentage100 / 2 + 50)(' '.repeat(percentage10 * 2))}${' '.repeat(20 - percentage10 * 2)} ${percentage100}% `
+            ? `${chalk.bgHsl(100, 100, 100 - (percentage100 / 2))(' '.repeat(percentage10 * 2))}${' '.repeat(20 - percentage10 * 2)} ${percentage100}% `
             : '';
         const spinnerFrame = Math.round(ms / 80) % spinnerFramesLength;
         const spinner = symbol || (this.timer ? spinnerFrames[spinnerFrame] || spinnerFrame : '');
-        const message = `${this.prefix || getPrefix('', this.label, 'blue')}${progressBar}${spinner} ${text} ${msString}`;
+        const message = `${this.prefix || (getPrefix() + ' [' + getFilename().shortenedName + '] ')}${progressBar}${spinner} ${text} ${msString}`;
         if (this.timer) {
             return logUpdate(message);
         }
@@ -101,5 +81,11 @@ export class Progress {
 
     fail(message: string | null) {
         this.stop(message || 'Failed.', logSymbols.error);
+    }
+
+    clear() {
+        if (this.interval) {
+            logUpdate.clear();
+        }
     }
 }

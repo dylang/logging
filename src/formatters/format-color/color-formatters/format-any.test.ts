@@ -1,7 +1,7 @@
 import * as stripAnsi from 'strip-ansi';
 import {formatAny} from './format-any';
 
-jest.mock('../../serializers', () => ({
+jest.mock('../../../serializers', () => ({
     serializeError: () => ({
         name: 'Error',
         message: 'mock error',

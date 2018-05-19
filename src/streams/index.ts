@@ -1,1 +1,2 @@
-export {writeStdOut} from './write-stdout';
+export {streamStdout} from './stream-stdout';
+export {streamRaw} from './stream-raw';

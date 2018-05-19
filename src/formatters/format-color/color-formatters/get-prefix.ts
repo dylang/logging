@@ -1,10 +1,10 @@
 import chalk from 'chalk';
-import {timestamp} from './timestamp';
+import {duration} from './duration';
 
-export const getPrefix = (type: string, label: string, color: string) => {
-    const labelWithColor = label || type
-        ? `[${chalk[color](`${label}${label && type ? ' ' : ''}${type}`)}] `
-        : '';
+const durationLength = 7;
 
-    return `${chalk.gray(timestamp())} ${labelWithColor}`;
+export const getPrefix = () => {
+    const durationString = duration();
+    const durationPadding = ' '.repeat(Math.max(durationLength - durationString.length, 0));
+    return `${chalk.gray(durationPadding)}${chalk.gray(durationString)}`;
 };

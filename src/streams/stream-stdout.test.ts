@@ -1,11 +1,11 @@
-import {writeStdOut} from './write-stdout';
+import {streamStdout} from './stream-stdout';
 
 console.log = jest.fn();
 
 describe('write-stdout', () => {
     test('writeStdOut color', async () => {
-        writeStdOut('test');
-        expect(console.log).toHaveBeenCalledWith('test');
+        streamStdout('test');
+        expect(console.log).toHaveBeenCalledWith('fobar');
     });
 
 });

@@ -1,62 +1,83 @@
 {
   "name": "logging",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Lightweight informative modern console logging.",
-  "main": "lib",
-  "browser": "lib/browser.js",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "jsnext:main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "browser": "./lib/browser.js",
   "files": [
     "lib",
     "src"
   ],
   "scripts": {
     "start": "babel-node src",
-    "test": "npm -s run lint && ava --verbose && npm -s run example",
-    "update-snapshots": "ava --verbose --update-snapshots",
-    "lint": "eslint -c .eslintrc.js . --fix",
-    "build": "babel src --out-dir=lib",
-    "outdated": "npm-check -s",
-    "example": "babel-node examples/simple.js",
-    "prepublish": "npm -s run build",
-    "precommit": "npm -s run test",
+    "build": "tsc -p .",
+    "test": "jest && yarn -s run example",
+    "lint": "tslint . --fix",
+    "example": "node examples/simple.js",
+    "prepublish": "yarn -s run build",
+    "precommit": "yarn -s run test",
     "np": "np"
   },
   "repository": "http://github.com/dylang/logging",
   "author": "Dylan Greene <dylang@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@sindresorhus/is": "0.9.0",
+    "ansi-hash": "^1.0.0",
+    "boxen": "1.3.0",
+    "chalk": "^2.4.1",
+    "log-symbols": "^2.2.0",
+    "log-update": "^2.3.0",
     "nicely-format": "^1.1.0",
-    "chalk": "^1.1.3",
-    "debug": "^2.6.1"
+    "ora": "^2.1.0",
+    "pkg-dir": "^2.0.0",
+    "pretty-ms": "3.1.0",
+    "serialize-error": "2.1.0",
+    "strip-ansi": "4.0.0",
+    "term-size": "1.2.0",
+    "time-span": "2.0.0",
+    "wrap-ansi": "3.0.1"
   },
   "devDependencies": {
-    "ava": "^0.18.2",
-    "babel-cli": "^6.23.0",
-    "babel-core": "^6.23.1",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-env": "^1.1.6",
-    "babel-runtime": "^6.23.0",
-    "eslint": "^3.16.0",
-    "eslint-config-xo": "^0.17.0",
-    "eslint-loader": "^1.6.0",
-    "eslint-plugin-ava": "^4.2.0",
-    "eslint-plugin-import": "^2.0.1",
-    "eslint-plugin-no-use-extend-native": "^0.3.11",
-    "eslint-plugin-promise": "^3.4.2",
-    "eslint-plugin-unicorn": "^2.0.1",
-    "husky": "^0.13.1",
-    "mockdate": "^2.0.1",
-    "nodemon": "^1.11.0",
-    "np": "^2.12.0",
-    "npm": "^4.2.0",
-    "npm-check": "^5.4.0",
-    "sinon": "^2.0.0-pre.4"
+    "@types/common-tags": "^1.4.0",
+    "@types/jest": "^22.2.3",
+    "@types/log-symbols": "^2.0.0",
+    "@types/log-update": "^2.0.0",
+    "@types/node": "10.1.2",
+    "@types/ora": "^1.3.4",
+    "@types/pkg-dir": "^2.0.0",
+    "@types/pretty-ms": "^3.0.0",
+    "@types/time-span": "^2.0.0",
+    "@types/wrap-ansi": "^3.0.0",
+    "common-tags": "1.7.2",
+    "jest": "^22.4.3",
+    "np": "^2.16.0",
+    "strip-ansi": "4.0.0",
+    "ts-jest": "^22.4.6",
+    "tslint": "^5.10.0",
+    "tslint-xo": "^0.7.0",
+    "typescript": "^2.8.3"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 8"
   },
-  "ava": {
-    "require": [
-      "babel-register"
+  "jest": {
+    "testMatch": [
+      "<rootDir>/src/**/*.test.ts"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
     ]
   }
 }
