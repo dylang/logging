@@ -20,25 +20,19 @@ yarn add logging
 ## Usage
 
 ```js
-// or const createLogger = require('logging').default;  
-import createLogger from 'logging';
-
-const log = createLogger('FeatureName');
+// or const log = require('logging').default;  
+import { log } from 'logging';
 
 log.info('Interesting');
-// -> [ Feature ] Interesting
 
 log.warn('Hmmm...', { details });
-// -> [ WARNING Feature ] Hmmm... { details object }
 
 log.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
-// -> [ ERROR Feature ] Not good. Not good at all. { err } { context } ...
 
 // uses the debug module, use DEBUG=* or DEBUG=FeatureName to see these items.
 log.debug('Interesting');
-// -> [ Feature ] Interesting
-```
 
+```
 
 ```js
 import { createLog, defaultLog, mockLog } from 'logging';
@@ -47,12 +41,12 @@ const log = createLog('name of log');
 log.info('some data');
 defaultLog.info('some other data');
 
-
 // strict json for the life of the process
-log.configure({ format: 'json' })
-log.format(({ format, data }) => format === 'json' ? ({
-   name: "any values here will be included with every log entry when using json",
-   ...data
-}) : data)
+log.outputJson()
+// default color output
+log.outputColor()
+// Additional data included with every json message
+log.jsonMetadata({})
+
 ```
 

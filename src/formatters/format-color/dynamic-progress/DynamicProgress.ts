@@ -2,10 +2,10 @@ import chalk from 'chalk';
 import * as logUpdate from 'log-update';
 import * as logSymbols from 'log-symbols';
 import * as timeSpan from 'time-span';
-import * as prettyMs from 'pretty-ms';
 import {clearInterval} from 'timers';
-import {getPrefix} from './get-prefix';
-import {getFilename} from './get-filename';
+import {getDuration, getPackageAndFilename} from '../prefix';
+import {getColumns} from '../../../config';
+import {rightJustify} from '../helpers';
 
 const spinnerFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 const spinnerFramesLength = spinnerFrames.length;
@@ -13,7 +13,7 @@ const spinnerFramesLength = spinnerFrames.length;
 export class DynamicProgress {
     private percentage: number;
     private interval: NodeJS.Timer | null;
-    private timer: timeSpan.TimeSpanObject | null;
+    private timer: timeSpan.TimeSpanObject | undefined;
     private message: string | null;
     private prefix: string | null;
 
@@ -28,12 +28,7 @@ export class DynamicProgress {
             return;
         }
 
-        /*outStream.on('data', () => {
-            if (this.interval) {
-                logUpdate.clear();
-            }
-        });*/
-        this.prefix = getPrefix() + ' [' + getFilename().shortenedName + '] ';
+        this.prefix = getPackageAndFilename('PROGRESS');
         this.timer = timeSpan();
         this.interval = setInterval(() => this.render(), 50);
     }
@@ -44,10 +39,20 @@ export class DynamicProgress {
             this.interval = null;
         }
         this.render(message, symbol);
-        this.timer = null;
+        this.timer = undefined;
         this.message = null;
         this.prefix = null;
         this.percentage = 0;
+    }
+
+    private renderBar() {
+        const columns = getColumns();
+        const progressBarLength = Math.round(columns / 3);
+        const currentLength = Math.round(this.percentage * progressBarLength);
+        const on = chalk.bgHex('73c1bf')(' '.repeat(currentLength));
+        const off = chalk.bgWhite(' '.repeat(progressBarLength - currentLength));
+
+        return `${on}${off}`;
     }
 
     private render(text = this.message, symbol: string = '') {
@@ -55,22 +60,19 @@ export class DynamicProgress {
             return this.success(text);
         }
         const ms = this.timer ? this.timer() : 0;
-        const msString = ms > 1000
-            ? chalk.green(`${prettyMs(ms, {secDecimalDigits: 0, msDecimalDigits: 0})}`)
-            : '';
         const percentage100 = Math.round(this.percentage * 100);
-        const percentage10 = Math.round(this.percentage * 10);
-        const progressBar = percentage10 > 0
-            ? `${chalk.bgHsl(100, 100, 100 - (percentage100 / 2))(' '.repeat(percentage10 * 2))}${' '.repeat(20 - percentage10 * 2)} ${percentage100}% `
+        const progressBar = percentage100 > 0
+            ? chalk`${this.renderBar()} {hex('73c1bf') ${rightJustify(percentage100, 3)}% }`
             : '';
         const spinnerFrame = Math.round(ms / 80) % spinnerFramesLength;
-        const spinner = symbol || (this.timer ? spinnerFrames[spinnerFrame] || spinnerFrame : '');
-        const message = `${this.prefix || (getPrefix() + ' [' + getFilename().shortenedName + '] ')}${progressBar}${spinner} ${text} ${msString}`;
+        const spinner = (symbol || (this.timer ? chalk.hex('73c1bf')(spinnerFrames[spinnerFrame]) : ''));
+        const message = `${getDuration(this.timer)}${this.prefix || getPackageAndFilename('PROGRESS')} ${progressBar}${spinner} ${text}`;
         if (this.timer) {
             return logUpdate(message);
         }
         if (message) {
-            console.error(message);
+            process.stdout.write(message);
+            process.stdout.write('\n');
         }
         this.message = null;
     }

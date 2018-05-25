@@ -1,21 +1,37 @@
 // yarn run example
 // import {defaultLog} from "../src/log-instance";
 
-const { createLog } = require('../lib');
+const logger = require('../lib').default;
+const { log  } = require('../lib');
 
 const example = async () => {
-    const log = createLog('Feature');
-
     const details = { blah: true };
     const err = new Error('This error is part of the example');
     const context = { userid: 1 };
     const etc = false;
+
+
+    console.log('i am console.log');
+    console.warn('i am console.warn');
+
+    log.info(logger());
+    log.info(logger().info);
+    logger().info('this is interesting');
+
+    log.info('/', 'back');
+    log.info('\/', 'escaped back');
+    log.info('\\', 'forward');
+    log.info(' \\ \\ wtf? / /', 'mulitiple forward');
+
+    log.info(' \\ \\/ / _` | \'_ \\ ____\\ \\ /\\ / / _ \\| \'__| |/ / __| \'_ \\ / _` |/ __/ _ \\/ __|')
+
 
     log.info('1234567890'.repeat(100));
     log.debug('set DEBUG=Feature or DEBUG=* to see this one');
     log.info('Interesting');
     log.warn('Hmmm...', 123, false, { details });
     log.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
+    log.error('Error object', new Error('Exception happened'));
     log.info(`
         This
         will
@@ -30,40 +46,30 @@ const example = async () => {
     obj.map = new Map();
     obj.map.set('prop', 'value');
     obj.array = [ 1, NaN, Infinity ];
+    obj.asyncFunction = async (param) => ({param}),
+    obj.promise = new Promise(() => {}),
+    obj.native = console.log;
 
-    log.info(obj);
-
+    log.info('using log.info', obj);
     log.help(`
-    
         This is
-        {green multiple lines.}
-        Should add chalk too?
-        
+        {green multiple .}
+        Supports chalk too.
     `);
+    log.info('...');
+    log.info(obj.promise);
     log.success('This is working!');
+    log.info('...');
     log.progress('This is going to take a while...');
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
+    await new Promise(resolve => setTimeout(() => resolve(), 200));
     log.progress('Still going...');
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
-    log.progress('Not too much longer...');
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
-    log.fail('Whoops...');
+    await new Promise(resolve => setTimeout(() => resolve(), 200));
+    log.success('This is done!');
     log.info('i thought we were done.');
-    log.progress('This is going to take a while...', 0);
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
-    log.progress('Still going 1...', .10);
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
-    log.progress('Still going 2...', .20);
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
-    log.progress('Still going 3...', .30);
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
-    log.progress('Still going 4...', .40);
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
-    log.progress('Not too much longer...', .50);
-    await new Promise(resolve => setTimeout(() => resolve(), 1000));
-    log.progress('All done!', 1.00);
-    log.success('All done!');
-
+    for (let i = 0; i<=100; i++) {
+        log.progress('This is going to take a while...', i/100);
+        await new Promise(resolve => setTimeout(() => resolve(), 200));
+    }
     log.help('That was the spinner');
 };
 

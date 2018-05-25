@@ -2,6 +2,7 @@ import * as nicelyFormat from 'nicely-format';
 import is from '@sindresorhus/is';
 import {serializeError} from '../../../serializers';
 import chalk from 'chalk';
+import {nonBreakingWhitespace} from '../helpers';
 
 const formatObject = (object: object) => nicelyFormat(object, {
     highlight: true,
@@ -25,18 +26,23 @@ const formatObject = (object: object) => nicelyFormat(object, {
         misc: 'grey',
         key: 'cyan'
     }
-});
+}).replace(/: /g, `:${nonBreakingWhitespace}`);
 
 export const formatAny = (arg: any): string => {
     if (is.string(arg)) {
         // This hack lets chalk template our strings, like '{blue i am blue}'
         const array = [arg] as any;
-        array.raw = [arg];
+        array.raw = [arg.replace(/\\/g, '\\\\')];
         try {
             return chalk(array);
         } catch {
-            return arg;
+            // If chalk has errors just return original
         }
+        return arg;
+    }
+
+    if (is.promise(arg)) {
+        return chalk`{blue [Promise]}`;
     }
 
     if (is.error(arg)) {

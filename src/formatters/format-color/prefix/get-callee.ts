@@ -1,6 +1,5 @@
 import * as path from 'path';
 import * as pkgDir from 'pkg-dir';
-import chalk from 'chalk';
 
 interface CallSite {
     getFileName(): string;
@@ -8,9 +7,9 @@ interface CallSite {
 
 const originalPrepareStackTrace = Error.prepareStackTrace;
 const cwd = process.cwd();
-const permittedCharacters = 60;
 
-export const getFilename = () => {
+// DEBUG will show full file path for all messages
+export const getCallee = () => {
     Error.prepareStackTrace = (error: any, rawStack: any) => rawStack;
     const stack = new Error().stack as any as CallSite[];
     Error.prepareStackTrace = originalPrepareStackTrace;
@@ -30,11 +29,9 @@ export const getFilename = () => {
             .reverse()[0];
 
     const relativeFilename = path.relative(cwd, filePath);
-    const remainder = permittedCharacters - packageName.length - (packageName.length ? 1 : 0);
-    const shortenedName = `${chalk.hex('5b7b8c')(packageName)}${shortenedFileName ? chalk.gray('/') : ''}${chalk.hex('73c1bf')(shortenedFileName.substr(0, remainder))}`;
     return {
         packageName,
         relativeFilename,
-        shortenedName
+        shortenedFileName
     };
 };

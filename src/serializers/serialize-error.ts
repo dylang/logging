@@ -1,4 +1,5 @@
 import * as serializeErrorToObject from 'serialize-error';
+import * as cleanStack from 'clean-stack';
 
 const cwdRegex = new RegExp(process.cwd(), 'g');
 
@@ -7,6 +8,6 @@ export const serializeError = (err: Error) => {
     return {
         ...errorObject,
         message: errorObject.message.replace(cwdRegex, '.'),
-        stack: errorObject.stack.replace(cwdRegex, '.')
+        stack: cleanStack(errorObject.stack).replace(cwdRegex, '.')
     };
 };

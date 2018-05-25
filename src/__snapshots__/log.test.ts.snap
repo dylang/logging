@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Log debug 1`] = `"      · [logging/get-callee] a b"`;
+
+exports[`Log error 1`] = `
+"      · [logging/src/formatters/format-color/prefix/get-callee.ts]
+        ╔═══════════╗
+        ║           ║
+        ║   ERROR   ║
+        ║           ║
+        ║   a b     ║
+        ║           ║
+        ╚═══════════╝"
+`;
+
+exports[`Log info 1`] = `"      · [logging/get-callee] a b"`;
+
+exports[`Log warn 1`] = `
+"      · [logging/src/formatters/format-color/prefix/get-callee.ts]
+        ┌─────────────┐
+        │             │
+        │   WARNING   │
+        │             │
+        │   a b       │
+        │             │
+        └─────────────┘"
+`;

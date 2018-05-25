@@ -1,32 +1,29 @@
-import {streamStdout} from './streams';
-import {LEVEL} from './types';
-import {Log} from './Log';
+import * as stripAnsi from 'strip-ansi';
+import {log} from './log';
 
-jest.mock('./streams');
+jest.mock('./streams', () => ({
+    streamStdout: (x: string) => x
+}));
 
 describe('Log', () => {
-    test('debug', async () => {
-        const log = new Log();
-        log.debug('a', 'b');
-        expect(streamStdout).toHaveBeenCalledWith(LEVEL.DEBUG, ['a', 'b']);
-    });
-
     test('info', async () => {
-        const log = new Log();
-        log.info('a', 'b');
-        expect(streamStdout).toHaveBeenCalledWith(LEVEL.INFO, ['a', 'b']);
+        const results = log.debug('a', 'b');
+        expect(stripAnsi(results)).toMatchSnapshot();
     });
 
     test('warn', async () => {
-        const log = new Log();
-        log.warn('a', 'b');
-        expect(streamStdout).toHaveBeenCalledWith(LEVEL.WARN, ['a', 'b']);
+        const results = log.warn('a', 'b');
+        expect(stripAnsi(results)).toMatchSnapshot();
     });
 
     test('error', async () => {
-        const log = new Log();
-        log.error('a', 'b');
-        expect(streamStdout).toHaveBeenCalledWith(LEVEL.ERROR, ['a', 'b']);
+        const results = log.error('a', 'b');
+        expect(stripAnsi(results)).toMatchSnapshot();
+    });
+
+    test('debug', async () => {
+        const results = log.debug('a', 'b');
+        expect(stripAnsi(results)).toMatchSnapshot();
     });
 
 });

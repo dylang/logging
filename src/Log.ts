@@ -1,68 +1,55 @@
-import {LEVEL, FORMAT} from './types';
 import {streamStdout, streamRaw} from './streams';
 import {formatColor, formatJson, dynamicProgress} from './formatters';
-import {globalState} from './global-state';
+import {logConfig} from './config';
 
-export class Log {
-    constructor() {
-    }
+const format = (level: Level, args: any[]) => {
+    return (logConfig.outputJson ? formatJson : formatColor)(level, args);
+};
 
+export const log = {
     // Needs better name
-    public help(...args: any[]): void {
-        const output = globalState.getOutputMode() === FORMAT.JSON
-            ? formatJson(LEVEL.HELP, args)
-            : formatColor(LEVEL.HELP, args);
+    help: (...args: any[]) => {
+        const output = format('HELP', args);
         return streamStdout(output);
-    }
-    public debug(...args: any[]): void {
-        const output = globalState.getOutputMode() === FORMAT.JSON
-            ? formatJson(LEVEL.DEBUG, args)
-            : formatColor(LEVEL.DEBUG, args);
+    },
+    debug: (...args: any[]) => {
+        const output = format('DEBUG', args);
         return streamStdout(output);
-    }
-    public info(...args: any[]): void {
-        const output = globalState.getOutputMode() === FORMAT.JSON
-            ? formatJson(LEVEL.INFO, args)
-            : formatColor(LEVEL.INFO, args);
+    },
+    info: (...args: any[]) => {
+        const output = format('INFO', args);
         return streamStdout(output);
-
-    }
-    public warn(...args: any[]): void {
-        const output = globalState.getOutputMode() === FORMAT.JSON
-            ? formatJson(LEVEL.WARN, args)
-            : formatColor(LEVEL.WARN, args);
+    },
+    warn: (...args: any[]) => {
+        const output = format('WARN', args);
         return streamStdout(output);
-    }
-    public error(...args: any[]): void {
-        const output = globalState.getOutputMode() === FORMAT.JSON
-            ? formatJson(LEVEL.ERROR, args)
-            : formatColor(LEVEL.ERROR, args);
+    },
+    error: (...args: any[]) => {
+        const output = format('ERROR', args);
         return streamStdout(output);
-
-    }
-    public progress(message: string, percentage?: number): void {
-        if (globalState.getOutputMode() === FORMAT.COLOR) {
-            return dynamicProgress.progress(message, percentage);
+    },
+    progress: (message: string, percentage?: number) => {
+        if (logConfig.outputJson) {
+            const output = formatJson('PROGRESS', [message, percentage]);
+            return streamStdout(output);
         }
-        const output = formatJson(LEVEL.PROGRESS, [message, percentage]);
-        return streamStdout(output);
-    }
-    public success(message: string): void {
-        if (globalState.getOutputMode() === FORMAT.COLOR) {
-            return dynamicProgress.success(message);
+        return dynamicProgress.progress(message, percentage);
+    },
+    success: (message: string) => {
+        if (logConfig.outputJson) {
+            const output = formatJson('PROGRESS', [message]);
+            return streamStdout(output);
         }
-        const output = formatJson(LEVEL.PROGRESS, [message]);
-        return streamStdout(output);
-    }
-    public fail(message: string): void {
-        if (globalState.getOutputMode() === FORMAT.COLOR) {
-            return dynamicProgress.fail(message);
+        return dynamicProgress.success(message);
+    },
+    fail: (message: string) => {
+        if (logConfig.outputJson) {
+            const output = formatJson('PROGRESS', [message]);
+            return streamStdout(output);
         }
-        const output = formatJson(LEVEL.PROGRESS, [message]);
-        return streamStdout(output);
+        return dynamicProgress.fail(message);
+    },
+    raw: (message: string) => {
+        return streamRaw(message);
     }
-
-    public raw(message: string): void {
-        streamRaw(message);
-    }
-}
+};

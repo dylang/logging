@@ -1,1 +1,2 @@
-export {formatColor, dynamicProgress} from './format-color';
+export {formatColor} from './format-color';
+export {dynamicProgress} from './dynamic-progress';
