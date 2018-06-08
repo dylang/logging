@@ -11,16 +11,19 @@ yarn add logging
 ```
 
 ## Features
-* Simple.
+* As easy to use as console.log.
 * Log levels.
 * Nice coloring.
 * Typescript types.
-* Node and Browser.
+* Error parsing with color-coded source context.
+* Progress bars.
+* Automatically shows how long tasks > 1 second take.
+* Use `DEBUG=log` env variable to see log.debug statements and see how long tasks < 1 second take.
 
 ## Usage
 
 ```js
-// or const log = require('logging').default;  
+// commonjs: const { default: log } = require('logging');  
 import { log } from 'logging';
 
 log.info('Interesting');

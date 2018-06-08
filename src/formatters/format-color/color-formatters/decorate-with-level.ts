@@ -1,48 +1,50 @@
+import chalk from 'chalk';
 import {getDuration, getPackageAndFilename} from '../prefix';
 import {indentedBox, indentAllExceptFirstLine, wrap, nonBreakingWhitespace} from '../helpers';
 import {getColumns} from '../../../config';
 
-const formatInfo = (prefix: string, content: string) => {
+const formatInfo = (duration: string, packageName: string, content: string) => {
     const columns = getColumns();
-    const wrappedContent = wrap(`${prefix.replace(/\s/g, nonBreakingWhitespace)}${nonBreakingWhitespace}${content}`, columns);
+    const wrappedContent = wrap(`${packageName.replace(/ /g, nonBreakingWhitespace)}${nonBreakingWhitespace}${content}`, columns);
+    return indentAllExceptFirstLine(`${duration}${wrappedContent}`);
+};
+
+const formatWarn = (duration: string, packageName: string, content: string) => {
+    const text = indentedBox(chalk`{black.bgYellow > WARNING <}\n\n${content}`, {padding: 1, borderColor: 'yellow'});
+    return `${duration}${packageName}\n${text}`;
+};
+
+const formatError = (duration: string, packageName: string, content: string) => {
+    const text = indentedBox(chalk`{white.bgRed > ERROR <}\n\n${content}`, {padding: 1, borderColor: 'red', borderStyle: 'double'});
+    return `${duration}${packageName}\n${text}`;
+};
+
+const formatDebug = (duration: string, packageName: string, content: string) => {
+    const columns = getColumns();
+    const wrappedContent = wrap(`${duration}${packageName} ${content}`, columns);
     return indentAllExceptFirstLine(wrappedContent);
 };
 
-const formatWarn = (prefix: string, content: string) => {
-    const text = indentedBox(`WARNING\n\n${content}`, {padding: 1, borderColor: 'yellow'});
-    return `${prefix}\n${text}`;
-};
-
-const formatError = (prefix: string, content: string) => {
-    const text = indentedBox(`ERROR\n\n${content}`, {padding: 1, borderColor: 'red', borderStyle: 'double'});
-    return `${prefix}\n${text}`;
-};
-
-const formatDebug = (prefix: string, content: string) => {
-    const columns = getColumns();
-    const wrappedContent = wrap(`${prefix} ${content}`, columns);
-    return indentAllExceptFirstLine(wrappedContent);
-};
-
-const formatHelp = (prefix: string, content: string) => {
+const formatHelp = (duration: string, packageName: string, content: string) => {
     const text = indentedBox(content, {padding: 1, borderColor: 'blue', borderStyle: 'single'});
-    return `${prefix}\n${text}`;
+    return `${duration}${packageName}\n${text}`;
 };
 
 export const decorateWithLevel = (level: Level, content: string) => {
-    const prefix = `${getDuration()}${getPackageAndFilename(level)}`;
+    const duration = getDuration(level);
+    const packageName = getPackageAndFilename(level);
     switch (level) {
         case 'INFO':
-            return formatInfo(prefix, content);
+            return formatInfo(duration, packageName, content);
         case 'WARN':
-            return formatWarn(prefix, content);
+            return formatWarn(duration, packageName, content);
         case 'ERROR':
-            return formatError(prefix, content);
+            return formatError(duration, packageName, content);
         case 'DEBUG':
-            return formatDebug(prefix, content);
+            return formatDebug(duration, packageName, content);
         case 'HELP':
-            return formatHelp(prefix, content);
+            return formatHelp(duration, packageName, content);
         default:
-            return formatInfo(prefix, content);
+            return formatInfo(duration, packageName, content);
     }
 };

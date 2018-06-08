@@ -13,8 +13,10 @@ export const log = {
         return streamStdout(output);
     },
     debug: (...args: any[]) => {
-        const output = format('DEBUG', args);
-        return streamStdout(output);
+        if (logConfig.outputJson || logConfig.isDebug) {
+            const output = format('DEBUG', args);
+            return streamStdout(output);
+        }
     },
     info: (...args: any[]) => {
         const output = format('INFO', args);

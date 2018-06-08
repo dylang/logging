@@ -1,10 +1,28 @@
 // yarn run example
 // import {defaultLog} from "../src/log-instance";
 
-const logger = require('../lib').default;
+const { default: defaultLog } = require('../lib');
 const { log  } = require('../lib');
+const createLog = require('../lib');
+
+const iWillThrowAnError = () => {
+    log.error(new Error('i threw an error'));
+};
+
+const forErrorStack = () => {
+    iWillThrowAnError();
+};
+
+const deepStackTest = () => {
+    forErrorStack();
+};
+
 
 const example = async () => {
+    console.log('createLog', createLog);
+    const fooLog = createLog('foo');
+    fooLog.info('this is foo log');
+
     const details = { blah: true };
     const err = new Error('This error is part of the example');
     const context = { userid: 1 };
@@ -14,20 +32,19 @@ const example = async () => {
     console.log('i am console.log');
     console.warn('i am console.warn');
 
-    log.info(logger());
-    log.info(logger().info);
-    logger().info('this is interesting');
+
+    deepStackTest();
+
+    defaultLog.info('this is interesting');
 
     log.info('/', 'back');
     log.info('\/', 'escaped back');
     log.info('\\', 'forward');
     log.info(' \\ \\ wtf? / /', 'mulitiple forward');
 
-    log.info(' \\ \\/ / _` | \'_ \\ ____\\ \\ /\\ / / _ \\| \'__| |/ / __| \'_ \\ / _` |/ __/ _ \\/ __|')
-
-
+    log.info(' \\ \\/ / _` | \'_ \\ ____\\ \\ /\\ / / _ \\| \'__| |/ / __| \'_ \\ / _` |/ __/ _ \\/ __|');
     log.info('1234567890'.repeat(100));
-    log.debug('set DEBUG=Feature or DEBUG=* to see this one');
+    log.debug('set DEBUG=logging or DEBUG=* to see this one');
     log.info('Interesting');
     log.warn('Hmmm...', 123, false, { details });
     log.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
@@ -38,7 +55,7 @@ const example = async () => {
         span
         {blue multiple}
         lines
-            and i'm indented.\n`);
+            and i'm indented.`);
 
     const obj = { property: {} };
     obj.circularReference = obj;
@@ -52,14 +69,14 @@ const example = async () => {
 
     log.info('using log.info', obj);
     log.help(`
-        This is
-        {green multiple .}
-        Supports chalk too.
+        This is a help box.
+        {green logging supports {cyan chalk} syntax too...}
     `);
     log.info('...');
     log.info(obj.promise);
     log.success('This is working!');
     log.info('...');
+
     log.progress('This is going to take a while...');
     await new Promise(resolve => setTimeout(() => resolve(), 200));
     log.progress('Still going...');
@@ -68,7 +85,7 @@ const example = async () => {
     log.info('i thought we were done.');
     for (let i = 0; i<=100; i++) {
         log.progress('This is going to take a while...', i/100);
-        await new Promise(resolve => setTimeout(() => resolve(), 200));
+        await new Promise(resolve => setTimeout(() => resolve(), 20));
     }
     log.help('That was the spinner');
 };

@@ -6,7 +6,6 @@ interface CallSite {
 }
 
 const originalPrepareStackTrace = Error.prepareStackTrace;
-const cwd = process.cwd();
 
 // DEBUG will show full file path for all messages
 export const getCallee = () => {
@@ -19,7 +18,8 @@ export const getCallee = () => {
     });
 
     const filePath = callers.find((x: string) => !x.includes('logging/lib')) || '';
-    const packageName = path.basename(pkgDir.sync(filePath) || '');
+    const packageDir = pkgDir.sync(filePath) || '';
+    const packageName = path.basename(packageDir);
     const shortenedFileName = filePath.includes('node_modules')
         ? ''
         : filePath
@@ -28,7 +28,7 @@ export const getCallee = () => {
             .split('/')
             .reverse()[0];
 
-    const relativeFilename = path.relative(cwd, filePath);
+    const relativeFilename = path.relative(packageDir, filePath);
     return {
         packageName,
         relativeFilename,
