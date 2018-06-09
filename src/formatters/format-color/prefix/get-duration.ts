@@ -18,5 +18,5 @@ export const getDuration = (level: Level, startTimeSpan: timeSpan.TimeSpanObject
     const annotation = level === 'DEBUG'
             ? 'DEBUG'
             : '';
-    return chalk`{gray ${chalk.bgMagenta.white(annotation)}${rightJustify(`${durationString}`, logConfig.indent - 1 - annotation.length)} }`;
+    return chalk`{bgMagenta.white ${annotation}}{gray ${rightJustify(durationString, logConfig.indent - 1 - annotation.length)} }`;
 };
