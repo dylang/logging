@@ -22,5 +22,3 @@ export class Config {
 }
 
 export const logConfig = new Config();
-
-// logConfig.proxyConsole();

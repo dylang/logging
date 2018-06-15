@@ -2,37 +2,60 @@ import {readFileSync, existsSync} from 'fs';
 import {codeFrameColumns} from '@babel/code-frame';
 import * as serializeErrorToObject from 'serialize-error';
 import * as cleanStack from 'clean-stack';
+import * as stripIndent from 'strip-indent';
+import * as minIndent from 'min-indent';
 import chalk from 'chalk';
 import isCI from 'is-ci';
-import {formatObject} from './format-object';
+import {formatAny} from './format-any';
 import {nonBreakingWhitespace} from '../helpers';
 
-const cwdRegex = new RegExp(process.cwd(), 'g');
+const root = process.env.HOME || process.cwd();
+const cwdRegex = new RegExp(root, 'gm');
+const filenameRegex = new RegExp(`${root}(/[a-zA-Z0-9\._/\-]*):`, 'g');
 
-const getCodeSnippet = (stackLine: string) => {
-    const [, filename, line, character] = stackLine.replace(/:\s/g, '').split(/[(:)]/);
+const getCodeSnippet = (stackLine: string, message: string) => {
+    const [at, filename, lineAsString, character] = stackLine
+        .replace(/:\s/g, '')
+        .replace('(anonymous function)', '')
+        .split(/[(:)]/);
 
     if (!filename) {
-        return stackLine;
+        return chalk.gray(stackLine.trim());
     }
 
     if (!existsSync(filename)) {
-        return stackLine;
+        return chalk.gray(stackLine.trim()); // + ` (${filename} not found)`;
     }
+    const lineNumber = parseInt(lineAsString, 10) - 1;
 
-    const fileContents = readFileSync(filename, {encoding: 'UTF-8'}).toString();
+    const fileContents = readFileSync(filename, {encoding: 'UTF-8'}).toString() + '//EOF';
+    const lines = fileContents.split('\n');
+    const linesAbove = !lines[lineNumber - 2] ? 1 : 2;
+    const linesBelow = !lines[lineNumber + 2] ? 1 : 2;
+    const linesToShow = lines.slice(lineNumber - linesAbove, lineNumber + linesBelow + 1).join('\n');
+    const unIndentCount = minIndent(linesToShow);
+    const modifiedFileContents = [
+        ...lines.slice(0, lineNumber - linesAbove),
+        stripIndent(linesToShow),
+        ...lines.slice(lineNumber + linesBelow),
+    ].join('\n');
     const annotatedCode = codeFrameColumns(
-        fileContents,
-        {start: {line: parseInt(line, 10), column:  parseInt(character, 10)}},
+        modifiedFileContents,
+        {start: {line: lineNumber + 1, column:  parseInt(character, 10) - unIndentCount}},
         {
             forceColor: true,
             highlightCode: true,
+            linesAbove,
+            linesBelow,
+            message
         }
     );
 
     return [
-        chalk.underline(isCI ? filename.replace(cwdRegex, '.') : filename),
-        annotatedCode.replace(/ /g, nonBreakingWhitespace)
+        '',
+        chalk`{gray ${at.trim()} in }{blue.underline ${isCI ? filename.replace(cwdRegex, '.') : filename}}`,
+        annotatedCode.replace(/ /g, nonBreakingWhitespace),
+        ''
     ].join('\n');
 
 };
@@ -48,14 +71,20 @@ export const formatError = (err: Error): string => {
         .replace(`${name}: ${message}\n`, '');
 
     const stackWithCodeSnippets = cleanedStack.split('\n')
-        .map((stackLine: string) => getCodeSnippet(stackLine))
-        .join('\n\n');
+        .map((stackLine: string, index) => getCodeSnippet(stackLine, index === 0 ? message : ''))
+        .join('\n');
     const metadataArray = Object.entries(errorMetadata || {});
 
-    return [
-        chalk.red.bold(`${name}: ${message.replace(cwdRegex, '.')}`),
+    const improvedStackArray = [
+        chalk.red(`${name}: ${message.replace(cwdRegex, '.')}`),
+        '',
         stackWithCodeSnippets,
         metadataArray.length ? ' ' : '',
-        metadataArray.map(([key, value]) => `${key}: ${formatObject(value)}`).join('\n'),
-    ].filter(Boolean).join('\n');
+        metadataArray.map(([key, value]) => chalk`{gray ${key}}: ${formatAny(value)}`).join('\n'),
+    ];
+
+    return improvedStackArray
+        .join('\n')
+        .replace(/\n\n\n/g, '\n\n')
+        .replace(filenameRegex, (_, relativePath) => chalk`{blue .${relativePath}}:`);
 };

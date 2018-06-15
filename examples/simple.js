@@ -5,18 +5,19 @@ const { default: defaultLog } = require('../lib');
 const { log  } = require('../lib');
 const createLog = require('../lib');
 
-const iWillThrowAnError = () => {
-    log.error(new Error('i threw an error'));
-};
 
-const forErrorStack = () => {
-    iWillThrowAnError();
-};
 
 const deepStackTest = () => {
+    const forErrorStack = () => {
+        const iWillThrowAnError = () => {
+            log.error(new Error('i threw an error'));
+        };
+
+        iWillThrowAnError();
+    };
+
     forErrorStack();
 };
-
 
 const example = async () => {
     console.log('createLog', createLog);
@@ -28,10 +29,8 @@ const example = async () => {
     const context = { userid: 1 };
     const etc = false;
 
-
     console.log('i am console.log');
     console.warn('i am console.warn');
-
 
     deepStackTest();
 
