@@ -1,4 +1,4 @@
-import * as nicelyFormat from 'nicely-format';
+import nicelyFormat from 'nicely-format';
 import {nonBreakingWhitespace} from '../helpers';
 
 export const formatObject = (object: object) => nicelyFormat(object, {

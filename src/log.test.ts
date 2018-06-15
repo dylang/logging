@@ -1,4 +1,4 @@
-import * as stripAnsi from 'strip-ansi';
+import stripAnsi from 'strip-ansi';
 import {log} from './log';
 
 jest.mock('./streams', () => ({

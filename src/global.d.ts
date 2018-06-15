@@ -4,12 +4,12 @@ declare module 'boxen';
 declare module 'term-size';
 declare module 'trim-newlines';
 declare module 'strip-ansi';
-declare module 'parse-ms';
 declare module 'fade-steps';
 declare module 'lodash.groupby';
 declare module 'is-ci';
 declare module 'strip-indent';
 declare module 'min-indent';
+
 
 type Level =
     'HELP' |

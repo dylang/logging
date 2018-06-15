@@ -1,4 +1,4 @@
-import * as stripAnsi from 'strip-ansi';
+import stripAnsi from 'strip-ansi';
 import {getColumns} from '../../../config';
 
 export const joinStringsWithNewlinesOrSpaces = (contentArray: string[]) => contentArray.reduce((acc, current, index) => {

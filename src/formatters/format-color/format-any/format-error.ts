@@ -1,9 +1,9 @@
 import {readFileSync, existsSync} from 'fs';
 import {codeFrameColumns} from '@babel/code-frame';
-import * as serializeErrorToObject from 'serialize-error';
-import * as cleanStack from 'clean-stack';
-import * as stripIndent from 'strip-indent';
-import * as minIndent from 'min-indent';
+import serializeErrorToObject from 'serialize-error';
+import cleanStack from 'clean-stack';
+import stripIndent from 'strip-indent';
+import minIndent from 'min-indent';
 import chalk from 'chalk';
 import isCI from 'is-ci';
 import {formatAny} from './format-any';

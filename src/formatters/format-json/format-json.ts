@@ -1,6 +1,6 @@
 import {inspect} from 'util';
 import is from '@sindresorhus/is';
-import * as groupBy from 'lodash.groupby';
+import groupBy from 'lodash.groupby';
 import {serializeError} from '../../serializers';
 import {logConfig} from '../../config';
 

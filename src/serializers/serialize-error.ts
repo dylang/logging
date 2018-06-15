@@ -1,5 +1,5 @@
-import * as serializeErrorToObject from 'serialize-error';
-import * as cleanStack from 'clean-stack';
+import serializeErrorToObject from 'serialize-error';
+import cleanStack from 'clean-stack';
 
 const cwdRegex = new RegExp(process.cwd(), 'g');
 

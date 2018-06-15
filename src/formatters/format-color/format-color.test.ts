@@ -13,6 +13,7 @@ describe('format-color.test', () => {
 
     test('formatColor with new lines', async () => {
         const result = formatColor('INFO', ['arg1\nnew-line', 'arg2', 'arg3']);
+        // tslint:disable-next-line:prefer-template
         expect(result).toEqual('INFO arg1\n' +
             'new-line \n' +
             'arg2 arg3');

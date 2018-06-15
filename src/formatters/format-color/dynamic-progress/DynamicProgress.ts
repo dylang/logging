@@ -1,8 +1,8 @@
 import chalk from 'chalk';
-import * as stripAnsi from 'strip-ansi';
-import * as logUpdate from 'log-update';
-import * as logSymbols from 'log-symbols';
-import * as timeSpan from 'time-span';
+import stripAnsi from 'strip-ansi';
+import logUpdate from 'log-update';
+import logSymbols from 'log-symbols';
+import timeSpan from 'time-span';
 import {clearInterval} from 'timers';
 import {getDuration, getPackageAndFilename} from '../prefix';
 import {getColumns, logConfig} from '../../../config';
@@ -12,12 +12,12 @@ const spinnerFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '
 const spinnerFramesLength = spinnerFrames.length;
 
 export class DynamicProgress {
-    private percentage: number;
-    private interval: NodeJS.Timer | null;
+    private percentage: number = 0;
+    private interval: NodeJS.Timer | null = null;
     private timer: timeSpan.TimeSpanObject | undefined;
-    private message: string | null;
-    private previousMessage: string | null;
-    private prefix: string | null;
+    private message: string | null = null;
+    private previousMessage: string | null = null;
+    private prefix: string | null = null;
 
     progress(message: string, percentage: number = 0) {
         if (logConfig.isDebug && this.previousMessage === message) {
@@ -86,7 +86,15 @@ export class DynamicProgress {
         const message = indentAllLines(wrap(text || '', columns));
 
         if (this.timer) {
-            logUpdate('\n' + chalk.underline(' '.repeat(columns + logConfig.indent)) + '\n\n' + everythingButText + '\n' + message + '\n'.repeat(4 - Math.ceil((text || '').length / columns)));
+            logUpdate([
+                '',
+                chalk.underline(' '.repeat(columns + logConfig.indent)),
+                '',
+                '',
+                everythingButText,
+                message,
+                '\n'.repeat(4 - Math.ceil((text || '').length / columns))
+            ].join('\n'));
             return;
         }
 

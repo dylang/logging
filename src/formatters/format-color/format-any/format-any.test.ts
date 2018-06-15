@@ -1,4 +1,4 @@
-import * as stripAnsi from 'strip-ansi';
+import stripAnsi from 'strip-ansi';
 import {formatAny} from './format-any';
 
 jest.mock('./format-error', () => ({formatError: (err: Error) => err.message}));

@@ -1,5 +1,5 @@
-import * as timeSpan from 'time-span';
-import * as parseMS from 'parse-ms';
+import timeSpan from 'time-span';
+import parseMS from 'parse-ms';
 import chalk from 'chalk';
 import {logConfig} from '../../../config';
 import {rightJustify} from '../helpers';

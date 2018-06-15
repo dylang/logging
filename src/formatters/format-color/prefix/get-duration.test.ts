@@ -1,4 +1,4 @@
-import * as timeSpan from 'time-span';
+import timeSpan from 'time-span';
 import {getDuration} from './get-duration';
 
 jest.mock('../../../config', () => ({
@@ -6,9 +6,7 @@ jest.mock('../../../config', () => ({
         indent: 8
     })
 }));
-jest.mock('chalk', () => ({
-    default: String.raw
-}));
+jest.mock('chalk', () => String.raw);
 jest.mock('time-span', () => jest.fn().mockReturnValue(() => 1000000));
 
 describe('get-duration', () => {

@@ -1,5 +1,5 @@
-import * as path from 'path';
-import * as pkgDir from 'pkg-dir';
+import path from 'path';
+import pkgDir from 'pkg-dir';
 
 interface CallSite {
     getFileName(): string;
@@ -9,7 +9,7 @@ const originalPrepareStackTrace = Error.prepareStackTrace;
 
 // DEBUG will show full file path for all messages
 export const getCallee = () => {
-    Error.prepareStackTrace = (error: any, rawStack: any) => rawStack;
+    Error.prepareStackTrace = (_, rawStack: any) => rawStack;
     const stack = new Error().stack as any as CallSite[];
     Error.prepareStackTrace = originalPrepareStackTrace;
 

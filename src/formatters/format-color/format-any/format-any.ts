@@ -5,15 +5,13 @@ import {formatObject} from './format-object';
 
 export const formatAny = (arg: any): string => {
     if (is.string(arg)) {
-
-        /* not done yet */
+        // Weak sauce for deciding this is an error stack
         if (arg.includes('    at ')) {
             const [errorMessage] = arg.split(/\s+at\s/);
             const testError = new Error(errorMessage);
             testError.stack = arg.replace(errorMessage, '').trim();
             return formatError(testError);
         }
-        /**/
 
         // This hack lets chalk template our strings, like '{blue i am blue}'
         const array = [arg] as any;
