@@ -11,45 +11,129 @@ yarn add logging
 ```
 
 ## Features
-* As easy to use as console.log.
-* Log levels.
-* Nice coloring.
-* Typescript types.
-* Error parsing with color-coded source context.
-* Progress bars.
-* Automatically shows how long tasks > 1 second take.
-* Use `DEBUG=log` env variable to see log.debug statements and see how long tasks < 1 second take.
 
-## Usage
+* Optimized for ES2018 and TypeScript.
+* As easy to use as console.log. No setup, no initializers, and no plugins required.
+* All common log levels: `info`, `warn`, `error`, `debug`.
+* Nice coloring, formatting, and indentation.
+* Error parsing with color-coded source context.
+* Automatically includes the filename where log was called, or if the file is `index`, then the directory name.
+* Monorepo friendly: show module name where log was called.
+* Automatically shows how long slow tasks are taking.
+
+## Common Usage
 
 ```js
 // commonjs: const { default: log } = require('logging');  
 import { log } from 'logging';
 
 log.info('Interesting');
-
 log.warn('Hmmm...', { details });
-
-log.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
-
-// uses the debug module, use DEBUG=* or DEBUG=FeatureName to see these items.
-log.debug('Interesting');
-
+log.error('Not good.', 'Not good at all.', err);
 ```
+
+`chalk` template tag parsing is built in.
 
 ```js
-import { createLog, defaultLog, mockLog } from 'logging';
-
-const log = createLog('name of log');
-log.info('some data');
-defaultLog.info('some other data');
-
-// strict json for the life of the process
-log.outputJson()
-// default color output
-log.outputColor()
-// Additional data included with every json message
-log.jsonMetadata({})
-
+log.info(`Server ready: {blue.underline http://localhost:${port}/}`);
 ```
+
+`stripIndents` from common-tags is built in.
+
+```js
+    log.info(`
+                All this extra spacing to the left:
+                    * Will be removed by logging so it's indented the same as other log messages.
+                    * These bullets will still be correctly indented.
+                    * It works with {magenta chalk colors too.}
+                Note: for this to work, make sure no text is on the same line as the back ticks. This line is extra long to show how line wrapping works.
+    `);
+```
+
+## `log.debug`
+
+```js
+// commonjs: const { default: log } = require('logging');  
+import { log } from 'logging';
+
+log.debug('This will only be seen when debug mode is enabled.');
+```
+
+Enable `debug mode` with any of the following environment variable choices:
+
+* `DEBUG=log`
+* `LOG=debug`
+* `LOG=verbose`
+* `LOGGING=*`
+* etc (we want it to be easy to guess the right way to see debug messages)
+
+```bash
+# example enabling debug mode
+$ LOG=* yarn start
+```
+
+With `debug mode` enabled, the following changes happen:
+ * `log.debug` are included in the log.
+ * Tasks < 1 second will show how many `ms` they take.
+ * `log.progress` will show every message instead of overwriting each message.
+ 
+## `log.raw(string)`
+
+Takes one `string` as input and sends it directly to the output stream. No formatting is done. No line break is added.
+This is useful as easy-to-mock alternative to `console.log` or `process.stdout.write`. 
+
+## Configuration
+
+Config changes will be global for the whole application, so you only need to do them once.
+
+```js
+import { logConfig } from 'logging';
+
+// All `console.log`, `console.warn`, and `console.error` calls will automatically call `log.info`, `log.warn`, `log.error`.
+// This is an easy way to enable `logging` across your entire application if you have been using `console`. 
+// It also enables `logging` in your third-party node_modules.
+logConfig.proxyConsole();
+
+if (process.env.NODE_ENV==='production') {
+    // It is usually best to only use this in a production environment.
+    logConfig.outputJson = true;
+    // Additional data included with every json message
+    logConfig.jsonMetadata = {
+        version: ''
+    };
+}
+```
+
+Note: `outputJson = true` will always includes `log.debug` messages. It's up to your log aggregation tooling to choose what you see and hide.
+
+## Mocking in Jest tests
+
+```js
+import { log } from 'logging';
+
+// Jest will automatically mock all logging methods. 
+// This will also clean up your test output because it hides what would otherwise get logged to the console. 
+jest.mock('logging');
+
+test('something that logs a warning', () => {
+    expect(log.warn).toHaveBeenCalledWith('I was warned about this!');
+});
+```
+
+## _Experimental_ `log.progress`, `log.success`, `log.fail`  
+
+`log.progress(message, optional percentage)`
+
+* Shows a spinner until `log.success` or `log.fail` is called.
+* If `percentage` (float `0.00` to `1.00`) is included, it will show a progress bar.
+* If `percentage` reaches `1`, then `log.success` is automatically called.
+
+This feature is still being worked on and the API is subject to change.
+* Only one `progress` at a time is supported.
+* Calling _any_ `log` function other than `progress` will stop the progress, and the next time `progress` is called, it wil start a new one. 
+
+
+## _Experimental_ `log.help`  
+
+* Similar to `log.info`, except puts it all in a blue box.   
 

@@ -1,3 +1,4 @@
+import * as stream from 'stream';
 import {streamStdout, streamRaw} from './streams';
 import {formatColor, formatJson, dynamicProgress} from './formatters';
 import {logConfig} from './config';
@@ -53,5 +54,9 @@ export const log = {
     },
     raw: (message: string) => {
         return streamRaw(message);
+    },
+    pipe: (stdout: stream.Duplex, stderr: stream.Duplex) => {
+        stdout.on('data', (buffer: Buffer) => streamRaw(buffer.toString()));
+        stderr.on('data', (buffer: Buffer) => streamRaw(buffer.toString()));
     }
 };

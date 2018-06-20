@@ -24,6 +24,8 @@ export const getCallee = () => {
         ? ''
         : filePath
             .replace(/\..sx?$/, '')
+            .replace(/\.esm$/, '')
+            .replace(/\.mjs$/, '')
             .replace(/\/index$/, '')
             .split('/')
             .reverse()[0];

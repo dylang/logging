@@ -19,7 +19,7 @@ const getCodeSnippet = (stackLine: string, message: string) => {
         .replace('(anonymous function)', '')
         .split(/[(:)]/);
 
-    if (!filename) {
+    if (!filename || filename.endsWith('node_modules/babel-register/lib/node.js')) {
         return chalk.gray(stackLine.trim());
     }
 

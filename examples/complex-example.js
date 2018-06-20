@@ -86,7 +86,7 @@ const example = async () => {
         log.progress('This is going to take a while...', i/100);
         await new Promise(resolve => setTimeout(() => resolve(), 20));
     }
-    log.help('That was the spinner');
+    log.success('That was the spinner');
 };
 
 example().then(() => {});
