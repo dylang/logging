@@ -12,14 +12,14 @@ const spinnerFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '
 const spinnerFramesLength = spinnerFrames.length;
 
 export class DynamicProgress {
-    private percentage: number = 0;
+    private percentage = 0;
     private interval: NodeJS.Timer | null = null;
     private timer: timeSpan.TimeSpanObject | undefined;
     private message: string | null = null;
     private previousMessage: string | null = null;
     private prefix: string | null = null;
 
-    progress(message: string, percentage: number = 0) {
+    progress(message: string, percentage = 0) {
         if (logConfig.isDebug && this.previousMessage === message) {
             return;
         }
@@ -69,7 +69,7 @@ export class DynamicProgress {
         return `${on}${off}`;
     }
 
-    private render(text = this.message, symbol: string = '') {
+    private render(text = this.message, symbol = '') {
         if (this.percentage >= 1 && this.interval) {
             return this.success(text);
         }

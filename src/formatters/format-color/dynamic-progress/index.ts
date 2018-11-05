@@ -1,3 +1,3 @@
-import {DynamicProgress} from './DynamicProgress';
+import {DynamicProgress} from './dynamic-progress';
 
 export const dynamicProgress = new DynamicProgress();
