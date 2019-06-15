@@ -1,4 +1,4 @@
-import {log} from '../lib';
+import { log } from '../lib';
 
 const typescriptExample = () => {
     log.info('starting example', '\nI will be on a new line!');

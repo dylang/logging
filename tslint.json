@@ -1,6 +1,0 @@
-{
-  "extends": "tslint-xo",
-  "rules": {
-    "indent": [true, "spaces", 4]
-  }
-}

@@ -1,2 +1,2 @@
-export {formatJson} from './format-json';
-export {formatColor, dynamicProgress} from './format-color';
+export { formatJson } from './format-json';
+export { formatColor, dynamicProgress } from './format-color';

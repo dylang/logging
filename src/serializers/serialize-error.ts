@@ -7,7 +7,7 @@ export const serializeError = (err: Error) => {
     const errorObject = serializeErrorToObject(err);
     return {
         ...errorObject,
-        message: errorObject.message.replace(cwdRegex, '.'),
-        stack: cleanStack(errorObject.stack).replace(cwdRegex, '.')
+        message: (errorObject.message || '').replace(cwdRegex, '.'),
+        stack: cleanStack(errorObject.stack || '').replace(cwdRegex, '.')
     };
 };

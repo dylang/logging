@@ -1,13 +1,13 @@
-import {readFileSync, existsSync} from 'fs';
-import {codeFrameColumns} from '@babel/code-frame';
+import { readFileSync, existsSync } from 'fs';
+import { codeFrameColumns } from '@babel/code-frame';
 import serializeErrorToObject from 'serialize-error';
 import cleanStack from 'clean-stack';
 import stripIndent from 'strip-indent';
 import minIndent from 'min-indent';
 import chalk from 'chalk';
 import isCI from 'is-ci';
-import {formatAny} from './format-any';
-import {nonBreakingWhitespace} from '../helpers';
+import { formatAny } from './format-any';
+import { nonBreakingWhitespace } from '../helpers';
 
 const root = process.env.HOME || process.cwd();
 const cwdRegex = new RegExp(root, 'gm');
@@ -28,7 +28,7 @@ const getCodeSnippet = (stackLine: string, message: string) => {
     }
     const lineNumber = parseInt(lineAsString, 10) - 1;
 
-    const fileContents = readFileSync(filename, {encoding: 'UTF-8'}).toString() + '//EOF';
+    const fileContents = readFileSync(filename, { encoding: 'UTF-8' }).toString() + '//EOF';
     const lines = fileContents.split('\n');
     const linesAbove = !lines[lineNumber - 2] ? 1 : 2;
     const linesBelow = !lines[lineNumber + 2] ? 1 : 2;
@@ -37,11 +37,11 @@ const getCodeSnippet = (stackLine: string, message: string) => {
     const modifiedFileContents = [
         ...lines.slice(0, lineNumber - linesAbove),
         stripIndent(linesToShow),
-        ...lines.slice(lineNumber + linesBelow),
+        ...lines.slice(lineNumber + linesBelow)
     ].join('\n');
     const annotatedCode = codeFrameColumns(
         modifiedFileContents,
-        {start: {line: lineNumber + 1, column:  parseInt(character, 10) - unIndentCount}},
+        { start: { line: lineNumber + 1, column: parseInt(character, 10) - unIndentCount } },
         {
             forceColor: true,
             highlightCode: true,
@@ -57,30 +57,24 @@ const getCodeSnippet = (stackLine: string, message: string) => {
         annotatedCode.replace(/ /g, nonBreakingWhitespace),
         ''
     ].join('\n');
-
 };
 
 export const formatError = (err: Error): string => {
-    const {
-        name,
-        message,
-        stack,
-        ...errorMetadata
-    } = serializeErrorToObject(err);
-    const cleanedStack = cleanStack(stack)
-        .replace(`${name}: ${message}\n`, '');
+    const { name, message, stack, ...errorMetadata } = serializeErrorToObject(err);
+    const cleanedStack = cleanStack(stack || '').replace(`${name}: ${message}\n`, '');
 
-    const stackWithCodeSnippets = cleanedStack.split('\n')
-        .map((stackLine: string, index) => getCodeSnippet(stackLine, index === 0 ? message : ''))
+    const stackWithCodeSnippets = cleanedStack
+        .split('\n')
+        .map((stackLine: string, index) => getCodeSnippet(stackLine, index === 0 ? message || '' : ''))
         .join('\n');
     const metadataArray = Object.entries(errorMetadata || {});
 
     const improvedStackArray = [
-        chalk.red(`${name}: ${message.replace(cwdRegex, '.')}`),
+        chalk.red(`${name}: ${(message || '').replace(cwdRegex, '.')}`),
         '',
         stackWithCodeSnippets,
         metadataArray.length ? ' ' : '',
-        metadataArray.map(([key, value]) => chalk`{gray ${key}}: ${formatAny(value)}`).join('\n'),
+        metadataArray.map(([key, value]) => chalk`{gray ${key}}: ${formatAny(value)}`).join('\n')
     ];
 
     return improvedStackArray

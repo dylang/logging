@@ -1,4 +1,4 @@
-import {serializeError} from './serialize-error';
+import { serializeError } from './serialize-error';
 
 describe('serialize-error', () => {
     test('serializeError', async () => {
@@ -10,7 +10,9 @@ describe('serialize-error', () => {
             expando: 'expando-value',
             message: 'example-error',
             name: 'Error',
-            stack: expect.stringContaining('Error: example-error\n    at Object.test (./src/serializers/serialize-error.test.ts')
+            stack: expect.stringContaining(
+                'Error: example-error\n    at Object.test (./src/serializers/serialize-error.test.ts'
+            )
         });
     });
 });

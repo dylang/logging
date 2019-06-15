@@ -1,2 +1,2 @@
-export {logConfig} from './config';
-export {getColumns, getColumnsWithBoxen} from './get-columns';
+export { logConfig } from './config';
+export { getColumns, getColumnsWithBoxen } from './get-columns';

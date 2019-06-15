@@ -1,7 +1,7 @@
 import * as stream from 'stream';
-import {streamStdout, streamRaw} from './streams';
-import {formatColor, formatJson, dynamicProgress} from './formatters';
-import {logConfig} from './config';
+import { streamStdout, streamRaw } from './streams';
+import { formatColor, formatJson, dynamicProgress } from './formatters';
+import { logConfig } from './config';
 
 const format = (level: Level, args: any[]) => {
     return (logConfig.outputJson ? formatJson : formatColor)(level, args);

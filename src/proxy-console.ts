@@ -1,4 +1,4 @@
-import {log} from './log';
+import { log } from './log';
 
 export const proxyConsole = (console: Console = global.console) => {
     console.info = (...args: any[]) => log.info(...args);

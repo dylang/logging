@@ -1,5 +1,5 @@
 import stripAnsi from 'strip-ansi';
-import {log} from './log';
+import { log } from './log';
 
 jest.mock('./streams', () => ({
     streamStdout: (x: string) => x
@@ -25,5 +25,4 @@ describe('Log', () => {
         const results = log.debug('a', 'b');
         expect(stripAnsi(results)).toMatchSnapshot();
     });
-
 });

@@ -1,9 +1,9 @@
-import {decorateWithLevel} from './decorate-with-level';
+import { decorateWithLevel } from './decorate-with-level';
 
 jest.mock('../../../config', () => ({
     getColumns: () => 80,
     getColumnsWithBoxen: () => 90,
-    logConfig: {indent: 8}
+    logConfig: { indent: 8 }
 }));
 jest.mock('../prefix', () => ({
     getPackageAndFilename: () => 'mock-package/mock-filename',

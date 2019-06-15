@@ -1,1 +1,1 @@
-export {serializeError} from './serialize-error';
+export { serializeError } from './serialize-error';

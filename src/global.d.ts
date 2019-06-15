@@ -8,17 +8,11 @@ declare module 'lodash.groupby';
 declare module 'strip-indent';
 declare module 'min-indent';
 
-type Level =
-    'HELP' |
-    'INFO' |
-    'WARN' |
-    'ERROR' |
-    'DEBUG' |
-    'PROGRESS';
+type Level = 'HELP' | 'INFO' | 'WARN' | 'ERROR' | 'DEBUG' | 'PROGRESS';
 
-interface zConfig {
-    indent: number;
-}
+// interface Config {
+//    indent: number;
+// }
 
 interface Log {
     help(...args: any[]): void;

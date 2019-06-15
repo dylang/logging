@@ -1,7 +1,7 @@
 import is from '@sindresorhus/is';
 import chalk from 'chalk';
-import {formatError} from './format-error';
-import {formatObject} from './format-object';
+import { formatError } from './format-error';
+import { formatObject } from './format-object';
 
 export const formatAny = (arg: any): string => {
     if (is.string(arg)) {

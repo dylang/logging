@@ -1,8 +1,8 @@
-import {indentAllLines} from './indent';
-import {wrap} from './wrap';
+import { indentAllLines } from './indent';
+import { wrap } from './wrap';
 import boxen from 'boxen';
 import trimNewlines from 'trim-newlines';
-import {getColumns, getColumnsWithBoxen} from '../../../config';
+import { getColumns, getColumnsWithBoxen } from '../../../config';
 
 /*
 const boxen = (str: string, borderColor: string) => [

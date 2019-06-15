@@ -1,7 +1,7 @@
 import stripAnsi from 'strip-ansi';
-import {formatAny} from './format-any';
+import { formatAny } from './format-any';
 
-jest.mock('./format-error', () => ({formatError: (err: Error) => err.message}));
+jest.mock('./format-error', () => ({ formatError: (err: Error) => err.message }));
 jest.mock('../helpers', () => ({
     nonBreakingWhitespace: '<nbsp>'
 }));
@@ -25,7 +25,7 @@ describe('format-any', () => {
         expect(stripAnsi(result)).toEqual('example error');
     });
     test('object', () => {
-        const result = formatAny({a: 'b', c: [1, '2']});
+        const result = formatAny({ a: 'b', c: [1, '2'] });
         expect(stripAnsi(result)).toEqual('{a:<nbsp>"b", c:<nbsp>[1, "2"]}');
     });
     test('null', () => {

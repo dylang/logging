@@ -1,1 +1,1 @@
-export {formatAny} from './format-any';
+export { formatAny } from './format-any';

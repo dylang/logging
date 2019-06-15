@@ -1,21 +1,28 @@
 import chalk from 'chalk';
-import {getDuration, getPackageAndFilename} from '../prefix';
-import {indentedBox, indentAllExceptFirstLine, wrap, nonBreakingWhitespace} from '../helpers';
-import {getColumns} from '../../../config';
+import { getDuration, getPackageAndFilename } from '../prefix';
+import { indentedBox, indentAllExceptFirstLine, wrap, nonBreakingWhitespace } from '../helpers';
+import { getColumns } from '../../../config';
 
 const formatInfo = (duration: string, packageName: string, content: string) => {
     const columns = getColumns();
-    const wrappedContent = wrap(`${packageName.replace(/ /g, nonBreakingWhitespace)}${nonBreakingWhitespace}${content}`, columns);
+    const wrappedContent = wrap(
+        `${packageName.replace(/ /g, nonBreakingWhitespace)}${nonBreakingWhitespace}${content}`,
+        columns
+    );
     return indentAllExceptFirstLine(`${duration}${wrappedContent}`);
 };
 
 const formatWarn = (duration: string, packageName: string, content: string) => {
-    const text = indentedBox(chalk`{black.bgYellow > WARNING <}\n\n${content}`, {padding: 1, borderColor: 'yellow'});
+    const text = indentedBox(chalk`{black.bgYellow > WARNING <}\n\n${content}`, { padding: 1, borderColor: 'yellow' });
     return `${duration}${packageName}\n${text}`;
 };
 
 const formatError = (duration: string, packageName: string, content: string) => {
-    const text = indentedBox(chalk`{white.bgRed > ERROR <}\n\n${content}`, {padding: 1, borderColor: 'red', borderStyle: 'double'});
+    const text = indentedBox(chalk`{white.bgRed > ERROR <}\n\n${content}`, {
+        padding: 1,
+        borderColor: 'red',
+        borderStyle: 'double'
+    });
     return `${duration}${packageName}\n${text}`;
 };
 
@@ -26,7 +33,7 @@ const formatDebug = (duration: string, packageName: string, content: string) => 
 };
 
 const formatHelp = (duration: string, packageName: string, content: string) => {
-    const text = indentedBox(content, {padding: 1, borderColor: 'blue', borderStyle: 'single'});
+    const text = indentedBox(content, { padding: 1, borderColor: 'blue', borderStyle: 'single' });
     return `${duration}${packageName}\n${text}`;
 };
 

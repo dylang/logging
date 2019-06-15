@@ -1,1 +1,1 @@
-export {decorateWithLevel} from './decorate-with-level';
+export { decorateWithLevel } from './decorate-with-level';

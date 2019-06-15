@@ -1,1 +1,1 @@
-export {formatJson} from './format-json';
+export { formatJson } from './format-json';
