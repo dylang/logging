@@ -3,31 +3,31 @@ import { streamStdout, streamRaw } from './streams';
 import { formatColor, formatJson, dynamicProgress } from './formatters';
 import { logConfig } from './config';
 
-const format = (level: Level, args: any[]) => {
+const format = (level: Level, args: unknown[]) => {
     return (logConfig.outputJson ? formatJson : formatColor)(level, args);
 };
 
-export const log = {
+export const logger = {
     // Needs better name
-    help: (...args: any[]) => {
+    help: (...args: unknown[]) => {
         const output = format('HELP', args);
         return streamStdout(output);
     },
-    debug: (...args: any[]) => {
+    debug: (...args: unknown[]) => {
         if (logConfig.outputJson || logConfig.isDebug) {
             const output = format('DEBUG', args);
             return streamStdout(output);
         }
     },
-    info: (...args: any[]) => {
+    info: (...args: unknown[]) => {
         const output = format('INFO', args);
         return streamStdout(output);
     },
-    warn: (...args: any[]) => {
+    warn: (...args: unknown[]) => {
         const output = format('WARN', args);
         return streamStdout(output);
     },
-    error: (...args: any[]) => {
+    error: (...args: unknown[]) => {
         const output = format('ERROR', args);
         return streamStdout(output);
     },
@@ -60,3 +60,5 @@ export const log = {
         stderr.on('data', (buffer: Buffer) => streamRaw(buffer.toString()));
     }
 };
+
+export type Logger = typeof logger;

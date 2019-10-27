@@ -7,12 +7,13 @@ import { format } from 'util';
 
 const replaceNonBreakingWhitespaceWithSpace = (str: string) => str.replace(new RegExp(nonBreakingWhitespace, 'g'), ' ');
 
-export const formatColor = (level: Level, args: any[]) => {
-    if (is.string(args[0]) && is.string(args[1]) && args[0].includes('%s')) {
+export const formatColor = (level: Level, args: unknown[]) => {
+    const arg0 = args[0];
+    if (is.string(arg0) && is.string(args[1]) && arg0.includes('%s')) {
         const [template, ...params] = args;
         return indentAllLines(format(template, ...params));
     }
-    const formattedMessages = args.filter((arg: any) => arg !== '').map((arg: any) => formatAny(arg));
+    const formattedMessages = args.filter((arg: unknown) => arg !== '').map((arg: unknown) => formatAny(arg));
     const contentJoined = joinStringsWithNewlinesOrSpaces(formattedMessages);
     const contentWithoutExcessIndentation = stripIndent`${contentJoined}`.replace(/ /g, nonBreakingWhitespace);
     dynamicProgress.clear();

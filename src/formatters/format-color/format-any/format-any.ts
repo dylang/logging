@@ -3,7 +3,11 @@ import chalk from 'chalk';
 import { formatError } from './format-error';
 import { formatObject } from './format-object';
 
-export const formatAny = (arg: any): string => {
+interface TemplateStringsArray extends Array<string> {
+    raw: string[];
+}
+
+export const formatAny = (arg: unknown): string => {
     if (is.string(arg)) {
         // Weak sauce for deciding this is an error stack
         if (arg.includes('    at ')) {
@@ -14,7 +18,7 @@ export const formatAny = (arg: any): string => {
         }
 
         // This hack lets chalk template our strings, like '{blue i am blue}'
-        const array = [arg] as any;
+        const array = [arg] as TemplateStringsArray;
         array.raw = [arg.replace(/\\/g, '\\\\')];
         try {
             return chalk(array);
@@ -30,6 +34,10 @@ export const formatAny = (arg: any): string => {
 
     if (is.error(arg)) {
         return formatError(arg);
+    }
+
+    if (is.generator(arg) || is.generatorFunction(arg)) {
+        return chalk`{blue [Generator]}`;
     }
     return formatObject(arg);
 };

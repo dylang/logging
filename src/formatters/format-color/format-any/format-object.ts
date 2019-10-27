@@ -1,7 +1,7 @@
 import nicelyFormat from 'nicely-format';
 import { nonBreakingWhitespace } from '../helpers';
 
-export const formatObject = (object: object) =>
+export const formatObject = <T>(object: T) =>
     nicelyFormat(object, {
         highlight: true,
         min: true,

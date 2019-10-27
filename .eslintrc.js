@@ -38,7 +38,6 @@ module.exports = {
                 properties: 'explicit',
                 parameterProperties: 'explicit'
             }
-        } ],
-        '@typescript-eslint/no-explicit-any': DISABLED
+        } ]
     }
 };

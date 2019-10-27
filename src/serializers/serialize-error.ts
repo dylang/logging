@@ -1,9 +1,9 @@
-import serializeErrorToObject from 'serialize-error';
+import { serializeError as serializeErrorToObject } from 'serialize-error';
 import cleanStack from 'clean-stack';
 
 const cwdRegex = new RegExp(process.cwd(), 'g');
 
-export const serializeError = (err: Error) => {
+export const serializeError = (err: Error | unknown) => {
     const errorObject = serializeErrorToObject(err);
     return {
         ...errorObject,

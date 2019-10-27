@@ -25,23 +25,23 @@ yarn add logging
 
 ```js
 // commonjs: const { default: log } = require('logging');  
-import { log } from 'logging';
+import { logger } from 'logging';
 
-log.info('Interesting');
-log.warn('Hmmm...', { details });
-log.error('Not good.', 'Not good at all.', err);
+logger.info('Interesting');
+logger.warn('Hmmm...', { details });
+logger.error('Not good.', 'Not good at all.', err);
 ```
 
 `chalk` template tag parsing is built in.
 
 ```js
-log.info(`Server ready: {blue.underline http://localhost:${port}/}`);
+logger.info(`Server ready: {blue.underline http://localhost:${port}/}`);
 ```
 
 `stripIndents` from common-tags is built in.
 
 ```js
-    log.info(`
+    logger.info(`
                 All this extra spacing to the left:
                     * Will be removed by logging so it's indented the same as other log messages.
                     * These bullets will still be correctly indented.
@@ -54,9 +54,9 @@ log.info(`Server ready: {blue.underline http://localhost:${port}/}`);
 
 ```js
 // commonjs: const { default: log } = require('logging');  
-import { log } from 'logging';
+import { logger } from 'logging';
 
-log.debug('This will only be seen when debug mode is enabled.');
+logger.debug('This will only be seen when debug mode is enabled.');
 ```
 
 Enable `debug mode` with any of the following environment variable choices:
@@ -73,11 +73,11 @@ $ LOG=* yarn start
 ```
 
 With `debug mode` enabled, the following changes happen:
- * `log.debug` are included in the log.
+ * `logger.debug` are included in the log.
  * Tasks < 1 second will show how many `ms` they take.
- * `log.progress` will show every message instead of overwriting each message.
+ * `logger.progress` will show every message instead of overwriting each message.
  
-## `log.raw(string)`
+## `logger.raw(string)`
 
 Takes one `string` as input and sends it directly to the output stream. No formatting is done. No line break is added.
 This is useful as easy-to-mock alternative to `console.log` or `process.stdout.write`. 
@@ -109,7 +109,7 @@ Note: `outputJson = true` will always includes `log.debug` messages. It's up to 
 ## Mocking in Jest tests
 
 ```js
-import { log } from 'logging';
+import { logger } from 'logging';
 
 // Jest will automatically mock all logging methods. 
 // This will also clean up your test output because it hides what would otherwise get logged to the console. 
@@ -120,20 +120,20 @@ test('something that logs a warning', () => {
 });
 ```
 
-## _Experimental_ `log.progress`, `log.success`, `log.fail`  
+## _Experimental_ `logger.progress`, `logger.success`, `logger.fail`  
 
 `log.progress(message, optional percentage)`
 
-* Shows a spinner until `log.success` or `log.fail` is called.
+* Shows a spinner until `logger.success` or `logger.fail` is called.
 * If `percentage` (float `0.00` to `1.00`) is included, it will show a progress bar.
-* If `percentage` reaches `1`, then `log.success` is automatically called.
+* If `percentage` reaches `1`, then `logger.success` is automatically called.
 
 This feature is still being worked on and the API is subject to change.
 * Only one `progress` at a time is supported.
 * Calling _any_ `log` function other than `progress` will stop the progress, and the next time `progress` is called, it wil start a new one. 
 
 
-## _Experimental_ `log.help`  
+## _Experimental_ `logger.help`  
 
-* Similar to `log.info`, except puts it all in a blue box.   
+* Similar to `logger.info`, except puts it all in a blue box.   
 

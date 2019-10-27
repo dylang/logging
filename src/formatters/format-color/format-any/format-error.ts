@@ -1,6 +1,6 @@
 import { readFileSync, existsSync } from 'fs';
 import { codeFrameColumns } from '@babel/code-frame';
-import serializeErrorToObject from 'serialize-error';
+import { serializeError } from 'serialize-error';
 import cleanStack from 'clean-stack';
 import stripIndent from 'strip-indent';
 import minIndent from 'min-indent';
@@ -60,7 +60,7 @@ const getCodeSnippet = (stackLine: string, message: string) => {
 };
 
 export const formatError = (err: Error): string => {
-    const { name, message, stack, ...errorMetadata } = serializeErrorToObject(err);
+    const { name, message, stack, ...errorMetadata } = serializeError(err);
     const cleanedStack = cleanStack(stack || '').replace(`${name}: ${message}\n`, '');
 
     const stackWithCodeSnippets = cleanedStack

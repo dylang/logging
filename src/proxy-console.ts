@@ -1,9 +1,9 @@
-import { log } from './log';
+import { logger } from './logger';
 
 export const proxyConsole = (console: Console = global.console) => {
-    console.info = (...args: any[]) => log.info(...args);
-    console.log = (...args: any[]) => log.info(...args);
-    console.warn = (...args: any[]) => log.warn(...args);
-    console.error = (...args: any[]) => log.error(...args);
-    console.debug = (...args: any[]) => log.debug(...args);
+    console.info = (...args: unknown[]) => logger.info(...args);
+    console.log = (...args: unknown[]) => logger.info(...args);
+    console.warn = (...args: unknown[]) => logger.warn(...args);
+    console.error = (...args: unknown[]) => logger.error(...args);
+    console.debug = (...args: unknown[]) => logger.debug(...args);
 };

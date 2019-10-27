@@ -9,8 +9,8 @@ const originalPrepareStackTrace = Error.prepareStackTrace;
 
 // DEBUG will show full file path for all messages
 export const getCallee = () => {
-    Error.prepareStackTrace = (_, rawStack: any) => rawStack;
-    const stack = (new Error().stack as any) as CallSite[];
+    Error.prepareStackTrace = (_, rawStack: unknown) => rawStack;
+    const stack = (new Error().stack as unknown) as CallSite[];
     Error.prepareStackTrace = originalPrepareStackTrace;
 
     const callers = stack.map((callsite: CallSite) => {

@@ -2,7 +2,7 @@ import { formatColor } from './format-color';
 
 jest.mock('./format-any', () => ({ formatAny: (x: string) => x }));
 jest.mock('./color-formatters', () => ({
-    decorateWithLevel: (a: any, b: string) => `${a} ${b}`
+    decorateWithLevel: (a: unknown, b: string) => `${a} ${b}`
 }));
 
 describe('format-color.test', () => {

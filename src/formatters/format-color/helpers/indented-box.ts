@@ -1,6 +1,6 @@
 import { indentAllLines } from './indent';
 import { wrap } from './wrap';
-import boxen from 'boxen';
+import boxen, { Options } from 'boxen';
 import trimNewlines from 'trim-newlines';
 import { getColumns, getColumnsWithBoxen } from '../../../config';
 
@@ -14,7 +14,7 @@ const boxen = (str: string, borderColor: string) => [
 ].join('\n');
 */
 
-export const indentedBox = (content: string, boxenOptions: any) => {
+export const indentedBox = (content: string, boxenOptions: Options) => {
     const columns = getColumns();
     return columns > 40
         ? indentAllLines(boxen(wrap(trimNewlines(content.trimRight()), getColumnsWithBoxen()), boxenOptions))

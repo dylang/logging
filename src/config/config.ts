@@ -16,3 +16,5 @@ export class Config {
 }
 
 export const logConfig = new Config();
+
+export type LogConfig = Config;

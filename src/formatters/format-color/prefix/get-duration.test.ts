@@ -16,13 +16,13 @@ describe('get-duration', () => {
     });
 
     test('getDuration with value passed in', async () => {
-        const startDur: any = () => 20000;
+        const startDur = () => 20000;
         const result = getDuration('PROGRESS', startDur as timeSpan.TimeEndFunction);
         expect(result).toEqual('{bgMagenta.white }{gray     20s }');
     });
 
     test('getDuration with less than one second', async () => {
-        const startDur: any = () => 200;
+        const startDur = () => 200;
         const result = getDuration('INFO', startDur as timeSpan.TimeEndFunction);
         expect(result).toEqual('{bgMagenta.white }{gray       · }');
     });

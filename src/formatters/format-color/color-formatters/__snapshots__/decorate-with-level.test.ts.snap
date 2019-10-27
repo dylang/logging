@@ -1,10 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`decorate-with-level debug 1`] = `
-"mock-durationmock-package/mock-filename 
-        content1234567890content1234567890content1234567890content1234567890content12345
-        67890content1234567890content1234567890content1234567890content1234567890content
-        1234567890"
+"mock-durationmock-package/mock-filename content1234567890content1234567890conten
+        t1234567890content1234567890content1234567890content1234567890content1234567890c
+        ontent1234567890content1234567890content1234567890"
 `;
 
 exports[`decorate-with-level error 1`] = `

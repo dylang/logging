@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { BorderStyle } from 'boxen';
 import { getDuration, getPackageAndFilename } from '../prefix';
 import { indentedBox, indentAllExceptFirstLine, wrap, nonBreakingWhitespace } from '../helpers';
 import { getColumns } from '../../../config';
@@ -21,7 +22,7 @@ const formatError = (duration: string, packageName: string, content: string) => 
     const text = indentedBox(chalk`{white.bgRed > ERROR <}\n\n${content}`, {
         padding: 1,
         borderColor: 'red',
-        borderStyle: 'double'
+        borderStyle: BorderStyle.Double
     });
     return `${duration}${packageName}\n${text}`;
 };
@@ -33,7 +34,7 @@ const formatDebug = (duration: string, packageName: string, content: string) => 
 };
 
 const formatHelp = (duration: string, packageName: string, content: string) => {
-    const text = indentedBox(content, { padding: 1, borderColor: 'blue', borderStyle: 'single' });
+    const text = indentedBox(content, { padding: 1, borderColor: 'blue', borderStyle: BorderStyle.Single });
     return `${duration}${packageName}\n${text}`;
 };
 

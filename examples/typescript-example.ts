@@ -1,9 +1,9 @@
-import { log } from '../lib';
+import { logger } from '../lib';
 
 const typescriptExample = () => {
-    log.info('starting example', '\nI will be on a new line!');
-    log.warn('today is', new Date());
-    log.error(new Error('this was an error'));
+    logger.info('starting example', '\nI will be on a new line!');
+    logger.warn('today is', new Date());
+    logger.error(new Error('this was an error'));
 };
 
 typescriptExample();

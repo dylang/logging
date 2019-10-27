@@ -1,13 +1,19 @@
-import { log } from './log';
-import { logConfig } from './config';
-export { log } from './log';
-export { logConfig } from './config';
+import { logger, Logger } from './logger';
+import { logConfig, LogConfig } from './config';
+export { logger, Logger } from './logger';
+export { logConfig, LogConfig } from './config';
 
+interface CreateLog {
+    (): Logger;
+    logger: Logger;
+    default: Logger;
+    logConfig: LogConfig;
+}
 // For backwards compatibility
-const createLog: CreateLog = () => log;
-createLog.log = log;
-createLog.default = log;
+const createLog: CreateLog = () => logger;
+createLog.logger = logger;
+createLog.default = logger;
 createLog.logConfig = logConfig;
-export default log;
+export default logger;
 
 module.exports = createLog;
