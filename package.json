@@ -6,8 +6,10 @@
   "browser": "lib/browser.js",
   "files": [
     "lib",
-    "src"
+    "src",
+    "index.d.ts"
   ],
+  "types": "index.d.ts",
   "scripts": {
     "start": "babel-node src",
     "test": "npm -s run lint && ava --verbose && npm -s run example",
