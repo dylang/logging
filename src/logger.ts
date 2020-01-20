@@ -18,6 +18,7 @@ export const logger = {
             const output = format('DEBUG', args);
             return streamStdout(output);
         }
+        return '';
     },
     info: (...args: unknown[]) => {
         const output = format('INFO', args);

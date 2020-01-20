@@ -7,14 +7,18 @@ interface TemplateStringsArray extends Array<string> {
     raw: string[];
 }
 
-export const formatAny = (arg: unknown): string => {
+export interface FormatOptions {
+    args: unknown[];
+}
+
+export const formatAny = (arg: unknown, formatOptions: FormatOptions): string => {
     if (is.string(arg)) {
         // Weak sauce for deciding this is an error stack
         if (arg.includes('    at ')) {
             const [errorMessage] = arg.split(/\s+at\s/);
             const testError = new Error(errorMessage);
             testError.stack = arg.replace(errorMessage, '').trim();
-            return formatError(testError);
+            return formatError(testError, formatOptions);
         }
 
         // This hack lets chalk template our strings, like '{blue i am blue}'
@@ -33,11 +37,11 @@ export const formatAny = (arg: unknown): string => {
     }
 
     if (is.error(arg)) {
-        return formatError(arg);
+        return formatError(arg, formatOptions);
     }
 
     if (is.generator(arg) || is.generatorFunction(arg)) {
         return chalk`{blue [Generator]}`;
     }
-    return formatObject(arg);
+    return formatObject(arg, formatOptions);
 };

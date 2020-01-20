@@ -43,7 +43,7 @@ const example = async () => {
     logger.info(" \\ \\/ / _` | '_ \\ ____\\ \\ /\\ / / _ \\| '__| |/ / __| '_ \\ / _` |/ __/ _ \\/ __|");
     logger.info('1234567890'.repeat(100));
     logger.debug('set DEBUG=logging or DEBUG=* to see this one');
-    logger.info('Interesting');
+    logger.info('Interesting', { number: 1 }, { letter: 'a' } );
     logger.warn('Hmmm...', 123, false, { details });
     logger.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
     logger.error('Error object', new Error('Exception happened'));
@@ -70,7 +70,8 @@ const example = async () => {
     };
     obj.circularReference = obj;
 
-    logger.info('using log.info', obj);
+    logger.info(obj);
+    logger.info('multiple items', obj);
     logger.help(`
         This is a help box.
         {green logging supports {cyan chalk} syntax too...}

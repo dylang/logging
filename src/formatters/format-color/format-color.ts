@@ -13,7 +13,7 @@ export const formatColor = (level: Level, args: unknown[]) => {
         const [template, ...params] = args;
         return indentAllLines(format(template, ...params));
     }
-    const formattedMessages = args.filter((arg: unknown) => arg !== '').map((arg: unknown) => formatAny(arg));
+    const formattedMessages = args.filter((arg: unknown) => arg !== '').map((arg: unknown) => formatAny(arg, { args }));
     const contentJoined = joinStringsWithNewlinesOrSpaces(formattedMessages);
     const contentWithoutExcessIndentation = stripIndent`${contentJoined}`.replace(/ /g, nonBreakingWhitespace);
     dynamicProgress.clear();

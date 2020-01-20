@@ -1,3 +1,4 @@
+import dateFormat from 'dateformat';
 import timeSpan from 'time-span';
 import parseMS from 'parse-ms';
 import chalk from 'chalk';
@@ -19,10 +20,11 @@ export const getDuration = (level: Level, startTimeSpan: timeSpan.TimeEndFunctio
                       : ''
               }`;
     lastCall = timeSpan();
+    const now = dateFormat('longTime');
     const durationString = ms < (logConfig.isDebug ? 100 : 1000) ? '·' : duration;
     const annotation = level === 'DEBUG' ? 'DEBUG' : '';
     return chalk`{bgMagenta.white ${annotation}}{gray ${rightJustify(
-        durationString,
+        `${now} ${durationString}`,
         logConfig.indent - 1 - annotation.length
     )} }`;
 };

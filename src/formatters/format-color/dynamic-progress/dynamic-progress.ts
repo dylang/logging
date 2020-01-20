@@ -76,7 +76,7 @@ export class DynamicProgress {
         const prefix = this.prefix || getPackageAndFilename('PROGRESS');
         const progressBar =
             percentage100 > 0
-                ? chalk`${this.renderBar(prefix)} {hex('73c1bf') ${rightJustify(percentage100, 3)}% }`
+                ? chalk`${this.renderBar(prefix)} {hex('73c1bf') ${rightJustify(String(percentage100), 3)}% }`
                 : '';
         const columns = getColumns();
         const spinnerFrame = Math.round(ms / 80) % spinnerFramesLength;

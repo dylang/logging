@@ -6,7 +6,7 @@ import stripIndent from 'strip-indent';
 import minIndent from 'min-indent';
 import chalk from 'chalk';
 import isCI from 'is-ci';
-import { formatAny } from './format-any';
+import { formatAny, FormatOptions } from './format-any';
 import { nonBreakingWhitespace } from '../helpers';
 
 const root = process.env.HOME || process.cwd();
@@ -59,7 +59,7 @@ const getCodeSnippet = (stackLine: string, message: string) => {
     ].join('\n');
 };
 
-export const formatError = (err: Error): string => {
+export const formatError = (err: Error, formatOptions: FormatOptions): string => {
     const { name, message, stack, ...errorMetadata } = serializeError(err);
     const cleanedStack = cleanStack(stack || '').replace(`${name}: ${message}\n`, '');
 
@@ -74,7 +74,7 @@ export const formatError = (err: Error): string => {
         '',
         stackWithCodeSnippets,
         metadataArray.length ? ' ' : '',
-        metadataArray.map(([key, value]) => chalk`{gray ${key}}: ${formatAny(value)}`).join('\n')
+        metadataArray.map(([key, value]) => chalk`{gray ${key}}: ${formatAny(value, formatOptions)}`).join('\n')
     ];
 
     return improvedStackArray
