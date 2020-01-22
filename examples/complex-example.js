@@ -1,10 +1,12 @@
+const { spawn } = require('child_process');
 // yarn run example
 // import {defaultLog} from "../src/log-instance";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { default: defaultLog } = require('../lib');
-const { logger } = require('../lib');
-const createLog = require('../lib');
+const { progressFriendlyStream } = require('../src');
+const { default: defaultLog } = require('../src');
+const { logger } = require('../src');
+// const createLog = require('../src');
 
 const deepStackTest = () => {
     const forErrorStack = () => {
@@ -19,10 +21,9 @@ const deepStackTest = () => {
 };
 
 const example = async () => {
-    console.log('createLog', createLog);
-    const fooLog = createLog('foo');
-    fooLog.info('this is foo log');
-
+    // console.log('createLog', createLog);
+    // const fooLog = createLog('foo');
+    // fooLog.info('this is foo log');
     const details = { blah: true };
     const err = new Error('This error is part of the example');
     const context = { userid: 1 };
@@ -33,8 +34,32 @@ const example = async () => {
 
     deepStackTest();
 
-    defaultLog.info('this is interesting');
+    // defaultLog.info('this is interesting');
 
+    logger.progress('foobar');
+    logger.success('success');
+    logger.info('1');
+    logger.info('2');
+    logger.info('3');
+    logger.info('4');
+    logger.info('5');
+    logger.info('6');
+    logger.info('7');
+    logger.info('8');
+    logger.info('9');
+    logger.info('10');
+    logger.info('11');
+    logger.info('12');
+    logger.info('13');
+    logger.info('14');
+    logger.info('15');
+    logger.info('16');
+    logger.info('17');
+    logger.info('18');
+    logger.info('19');
+    logger.info('20');
+    logger.progress('funbar');
+    logger.fail('fail');
     logger.info('/', 'back');
     logger.info('/', 'escaped back');
     logger.info('\\', 'forward');
@@ -43,7 +68,7 @@ const example = async () => {
     logger.info(" \\ \\/ / _` | '_ \\ ____\\ \\ /\\ / / _ \\| '__| |/ / __| '_ \\ / _` |/ __/ _ \\/ __|");
     logger.info('1234567890'.repeat(100));
     logger.debug('set DEBUG=logging or DEBUG=* to see this one');
-    logger.info('Interesting', { number: 1 }, { letter: 'a' } );
+    logger.info('Interesting', { number: 1 }, { letter: 'a' });
     logger.warn('Hmmm...', 123, false, { details });
     logger.error('Not good.', 'Not good at all.', { err }, { context }, { etc });
     logger.error('Error object', new Error('Exception happened'));
@@ -81,6 +106,9 @@ const example = async () => {
     logger.success('This is working!');
     logger.info('...');
 
+    const childProcess = spawn('ping', ['google.com'], { stdio: false });
+    progressFriendlyStream(childProcess);
+
     logger.progress('This is going to take a while...');
     await new Promise((resolve) => setTimeout(() => resolve(), 200));
     logger.progress('Still going...');
@@ -89,9 +117,20 @@ const example = async () => {
     logger.info('i thought we were done.');
     for (let i = 0; i <= 100; i++) {
         logger.progress('This is going to take a while...', i / 100);
+        logger.info(`{blue Hello} {green word} `.repeat(i), i);
         await new Promise((resolve) => setTimeout(() => resolve(), 20));
     }
     logger.success('That was the spinner');
+
+    childProcess.kill();
+
+    const child1 = logger.child({ child1: 'this is child 1', common: 'this is commmon' });
+    child1.warn('This is child 1', 'noooo!');
+
+    const child2 = logger.child({ child2: 'this is child 2', common: 'that was commmon' });
+    child2.error('This is child 2', 'wtf');
+
+    logger.fatal('Done!');
 };
 
 example().then(() => {});

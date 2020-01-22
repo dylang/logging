@@ -1,3 +1,4 @@
+import { destination } from 'pino';
 import { proxyConsole } from '../proxy-console';
 
 // We're flexible with what ENV people what to use to see the DEBUG messages.
@@ -8,11 +9,12 @@ export class Config {
     public jsonMetadata = {};
     public outputJson = false;
     public isDebug = ['debug', 'log', '*', 'verbose'].some((searchText: string) => envString.includes(searchText));
-    public indent = this.isDebug ? 15 : 8;
+    public indent = 18;
 
     public proxyConsole() {
         proxyConsole(console);
     }
+    public destination = process.stdout || destination();
 }
 
 export const logConfig = new Config();
