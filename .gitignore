@@ -1,3 +1,5 @@
+.npmrc
+.yarnrc
 .idea
 node_modules
 lib
