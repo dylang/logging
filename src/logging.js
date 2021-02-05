@@ -1,9 +1,4 @@
-import {
-    blue,
-    yellow,
-    red,
-    gray
-} from 'chalk';
+import chalk from 'chalk';
 import nicelyFormat from 'nicely-format';
 import createDebug from 'debug';
 
@@ -13,17 +8,18 @@ const time = () => {
     return date.toISOString().replace(/.*T(.*)Z/, '$1');
 };
 
-const indentText = (text) => text.replace(/^(?!\s+$)/mg, ' '.repeat(13)).trim();
+const indentText = (text) => text.replace(/^(?!\s+$)/gm, ' '.repeat(13)).trim();
 
 const logger = ({
-                    title,
-                    messages,
-                    logFunction
-                }) => {
+    title,
+    messages,
+    logFunction
+}) => {
     const formattedMessages = messages.map((message) => {
         if (typeof message === 'string') {
             return message;
         }
+
         return nicelyFormat(message, {
             highlight: true,
             min: true,
@@ -47,54 +43,54 @@ const logger = ({
                 key: 'cyan'
             }
         });
-    }).map(indentText);
-    logFunction(gray(time()), `[${title}]`, ...formattedMessages);
+    }).map((text) => indentText(text));
+    logFunction(chalk.gray(time()), `[${title}]`, ...formattedMessages);
 };
 
 const createLogger = (title,
-                      {
-                          debugFunction = createDebug(title),
-                          logFunction = console.log
-                      } = {}) => {
+    {
+        debugFunction = createDebug(title),
+        logFunction = console.log
+    } = {}) => {
     return {
         debug(...messages) {
             logger({
-                title: yellow(`DEBUG ${title}`),
+                title: chalk.yellow(`DEBUG ${title}`),
                 messages,
                 logFunction: debugFunction
             });
         },
         info(...messages) {
             logger({
-                title: blue(title),
+                title: chalk.blue(title),
                 messages,
                 logFunction
             });
         },
         warn(...messages) {
             logger({
-                title: yellow(`WARNING ${title}`),
+                title: chalk.yellow(`WARNING ${title}`),
                 messages,
                 logFunction
             });
         },
         error(...messages) {
             logger({
-                title: red(`ERROR ${title}`),
+                title: chalk.red(`ERROR ${title}`),
                 messages,
                 logFunction
             });
         },
         fatal(...messages) {
             logger({
-                title: red(`========= FATAL ${title} =========`),
+                title: chalk.red(`========= FATAL ${title} =========`),
                 messages,
                 logFunction
             });
         },
         trace(...messages) {
             logger({
-                title: red(`TRACE ${title}`),
+                title: chalk.red(`TRACE ${title}`),
                 messages,
                 logFunction
             });

@@ -1,5 +1,6 @@
 // Our rules are based on the defaults provided by XO
 // https://github.com/sindresorhus/xo
+// eslint-disable-next-line import/no-commonjs
 module.exports = {
     root: true,
     env: {
@@ -13,7 +14,7 @@ module.exports = {
         document: true
     },
     parserOptions: {
-        'ecmaVersion': 2017
+        ecmaVersion: 2017
     },
     plugins: [
         // https://github.com/dustinspecker/eslint-plugin-no-use-extend-native
@@ -30,10 +31,10 @@ module.exports = {
         'plugin:unicorn/recommended'
     ],
     rules: {
-        // we've transitioned from tabs to four spaces
-        'no-tabs': ['error'],
-        'indent': ['error', 4],
-        // use import, not require
+        // We've transitioned from tabs to four spaces
+        'no-tabs': [ 'error' ],
+        indent: [ 'error', 4 ],
+        // Use import, not require
         'import/no-commonjs': 'error',
         // Allow for: "ComponentName.test.js" instead of "component-name.test.js"
         'unicorn/filename-case': 0,
@@ -42,17 +43,17 @@ module.exports = {
         'unicorn/no-abusive-eslint-disable': 0,
         // Allow for todo comments
         'no-warning-comments': 0,
-        // readability: { spacing } and [ spacing ].
-        'object-curly-spacing': ['error', 'always'],
-        // readability: [[ 1, 2 ], 2, [ 3, 4 ]]
-        'array-bracket-spacing': ['error', 'always', { 'arraysInArrays': false }],
+        // Readability: { spacing } and [ spacing ].
+        'object-curly-spacing': [ 'error', 'always' ],
+        // Readability: [[ 1, 2 ], 2, [ 3, 4 ]]
+        'array-bracket-spacing': [ 'error', 'always', { arraysInArrays: false } ],
         // Good: (x) => { ... }, Bad: x => { ... }
-        'arrow-parens': ['error', 'always'],
-        // multi-line ternary ? and : operator at beginning of the line
-        'operator-linebreak': ['error', 'after', { 'overrides': { '?': 'before', ':': 'before' } }],
+        'arrow-parens': [ 'error', 'always' ],
+        // Multi-line ternary ? and : operator at beginning of the line
+        'operator-linebreak': [ 'error', 'after', { overrides: { '?': 'before', ':': 'before' } } ],
         // Allow debugger statements
         'no-debugger': 'warn',
         // Sort imports, absolute first then relative
-        'import/order': ['warn']
+        'import/order': [ 'warn' ]
     }
 };

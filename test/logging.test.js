@@ -19,7 +19,7 @@ test('log debug', (t) => {
     const logOutput = debugFunction.getCall(0).args;
     t.truthy(logOutput);
 
-    // snapshots broken https://github.com/avajs/ava/issues/1218
+    // Snapshots broken https://github.com/avajs/ava/issues/1218
     // t.snapshot(logOutput);
 });
 
@@ -31,7 +31,7 @@ test('log info', (t) => {
     const logOutput = logFunction.getCall(0).args;
     t.truthy(logOutput);
 
-    // snapshots broken https://github.com/avajs/ava/issues/1218
+    // Snapshots broken https://github.com/avajs/ava/issues/1218
     // t.snapshot(logFunction.getCall(0).args);
 });
 
@@ -43,7 +43,7 @@ test('log warning', (t) => {
     const logOutput = logFunction.getCall(0).args;
     t.truthy(logOutput);
 
-    // snapshots broken https://github.com/avajs/ava/issues/1218
+    // Snapshots broken https://github.com/avajs/ava/issues/1218
     // t.snapshot(logFunction.getCall(0).args);
 });
 
@@ -55,6 +55,6 @@ test('log error', (t) => {
     const logOutput = logFunction.getCall(0).args;
     t.truthy(logOutput);
 
-    // snapshots broken https://github.com/avajs/ava/issues/1218
+    // Snapshots broken https://github.com/avajs/ava/issues/1218
     // t.snapshot(logFunction.getCall(0).args);
 });
