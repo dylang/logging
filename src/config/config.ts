@@ -9,7 +9,7 @@ export class Config {
     public jsonMetadata = {};
     public outputJson = false;
     public isDebug = ['debug', 'log', '*', 'verbose'].some((searchText: string) => envString.includes(searchText));
-    public indent = 18;
+    public indent = 20; // 18;
 
     public proxyConsole() {
         proxyConsole(console);

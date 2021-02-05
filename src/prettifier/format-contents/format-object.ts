@@ -1,6 +1,7 @@
+/// <reference types="../../@types/concordance" />
 // import nicelyFormat from 'nicely-format';
 import chalk from 'chalk';
-import concordance from 'concordance';
+import { format } from 'concordance';
 import ansiStyles from 'ansi-styles';
 // import stripAnsi from 'strip-ansi';
 import { nonBreakingWhitespace } from '../layout';
@@ -116,9 +117,10 @@ const colorTheme = {
 const removeNewLines = (str: string) => str.replace(/\s+/g, ` `);
 
 export const formatObject = <T>(object: T, { args }: FormatOptions) => {
-    const str = concordance
-        .format(object, { maxDepth: 3, plugins: [], theme: colorTheme })
-        .replace(/: /g, `:${nonBreakingWhitespace}`);
+    const str = format(object, { maxDepth: 3, plugins: [], theme: colorTheme }).replace(
+        /: /g,
+        `:${nonBreakingWhitespace}`
+    );
 
     return args.length === 1 ? str : removeNewLines(str);
 };

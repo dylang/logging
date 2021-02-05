@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { LogMessage } from '../log-message';
 
-export const formatCallee = (logMessage: LogMessage) => {
+export const formatCallee = (logMessage: LogMessage, name?: string) => {
     const {
         level,
         callee: { packageName, shortenedFileName, relativeFilename }
@@ -41,5 +41,5 @@ export const formatCallee = (logMessage: LogMessage) => {
 
     return chalk`{gray [}{hex('5b7b8c') ${packageName}}${
         shortenedFileName ? chalk`{gray /}{hex('73c1bf') ${shortenedFileName}}` : ''
-    }{gray ]}`;
+    }${name ? chalk` {bold name}` : ''}{gray ]}`;
 };

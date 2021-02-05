@@ -1,7 +1,7 @@
+import is from '@sindresorhus/is';
 import pino, { BaseLogger, LoggerOptions, Bindings } from 'pino';
 import { prettifier } from '../prettifier';
 import { getMixins } from '../mixins';
-import { LogMessage } from '../prettifier/log-message';
 
 export interface Logger extends BaseLogger {
     info: (...args: unknown[]) => void;
@@ -16,15 +16,9 @@ export interface Logger extends BaseLogger {
     fail: (message: string) => void;
 }
 
-declare module 'pino' {
-    export interface LoggerOptions {
-        prettifier?: (options?: unknown) => (logMessage: LogMessage) => void;
-    }
-}
-
 const createPinoProxy = (pinoLogger: BaseLogger) =>
     new Proxy(pinoLogger, {
-        get: function(target, name) {
+        get: function (target, name) {
             if (
                 name === 'info' ||
                 name === 'warn' ||
@@ -60,20 +54,17 @@ const createPinoProxy = (pinoLogger: BaseLogger) =>
         }
     });
 
-export const pinoProxy = (pinoOptions: LoggerOptions = {}) => {
+export function pinoProxy(): Logger;
+export function pinoProxy(name?: string): Logger;
+export function pinoProxy(pinoOptions?: LoggerOptions): Logger;
+export function pinoProxy(pinoOptions?: string | LoggerOptions): Logger {
     const pinoLogger = pino({
-        prettyPrint: {
-            levelFirst: true
-        },
+        prettyPrint: true,
+        //nestedKey: 'payload',
         mixin: getMixins,
-        serializers: {
-            [Symbol.for('pino.*')]: (x) => {
-                return x;
-            }
-        },
         prettifier,
-        ...pinoOptions
+        ...(is.string(pinoOptions) ? { name: pinoOptions } : pinoOptions)
     });
 
     return createPinoProxy(pinoLogger) as Logger;
-};
+}

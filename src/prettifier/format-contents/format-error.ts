@@ -28,7 +28,7 @@ const getCodeSnippet = (stackLine: string, message: string) => {
     }
     const lineNumber = parseInt(lineAsString, 10) - 1;
 
-    const fileContents = readFileSync(filename, { encoding: 'UTF-8' }).toString() + '//EOF';
+    const fileContents = readFileSync(filename, { encoding: 'utf-8' }).toString() + '//EOF';
     const lines = fileContents.split('\n');
     const linesAbove = !lines[lineNumber - 2] ? 1 : 2;
     const linesBelow = !lines[lineNumber + 2] ? 1 : 2;

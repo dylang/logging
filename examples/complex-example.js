@@ -5,7 +5,7 @@ const { spawn } = require('child_process');
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { progressFriendlyStream } = require('../src');
 const { default: defaultLog } = require('../src');
-const { logger } = require('../src');
+const { logger, createLogger } = require('../src');
 // const createLog = require('../src');
 
 const deepStackTest = () => {
@@ -116,8 +116,8 @@ const example = async () => {
     logger.success('This is done!');
     logger.info('i thought we were done.');
     for (let i = 0; i <= 100; i++) {
-        logger.progress('This is going to take a while...', i / 100);
-        logger.info(`{blue Hello} {green word} `.repeat(i), i);
+        logger.progress('This is going to take a while...'); // , i / 100);
+        logger.info(i);
         await new Promise((resolve) => setTimeout(() => resolve(), 20));
     }
     logger.success('That was the spinner');
@@ -130,7 +130,11 @@ const example = async () => {
     const child2 = logger.child({ child2: 'this is child 2', common: 'that was commmon' });
     child2.error('This is child 2', 'wtf');
 
+    await new Promise((resolve) => setTimeout(() => resolve(), 5000));
     logger.fatal('Done!');
+
+    const fooLogger = createLogger('interesting');
+    fooLogger.info('this is cool');
 };
 
 example().then(() => {});

@@ -8,6 +8,7 @@ export interface LogMessage {
     hostname: string;
     duration: number;
     callee: ReturnType<typeof getCallee>;
+    name?: string;
     msg?: string;
     data?: unknown[];
     type?: string;

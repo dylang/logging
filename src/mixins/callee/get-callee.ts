@@ -17,7 +17,9 @@ export const getCallee = () => {
         return callsite.getFileName();
     });
 
-    const filePath = callers.find((x: string) => !x.includes('logging/lib') && !x.includes('logging/src') && !x.includes('pino')) || '';
+    const filePath =
+        callers.find((x: string) => !x.includes('logging/lib') && !x.includes('logging/src') && !x.includes('pino')) ||
+        '';
     const packageDir = pkgDir.sync(filePath) || '';
     const packageName = path.basename(packageDir);
     const shortenedFileName = filePath.includes('node_modules')

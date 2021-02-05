@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import { BorderStyle } from 'boxen';
 import { indentedBox, indentAllLines, wrap, nonBreakingWhitespace } from '../layout';
 import { getColumns } from '../../config';
 import { formatCallee } from '../format-callee';
@@ -35,7 +34,7 @@ const formatError = ({ timestamp, label, contents }: FormatData) => {
     const text = indentedBox(chalk.white.bgRed.bold('  X ERROR '), contents, {
         padding: 1,
         borderColor: 'red',
-        borderStyle: BorderStyle?.Double || 'double'
+        borderStyle: 'double'
     });
     return `${timestamp}${label}\n${text}`;
 };
@@ -66,12 +65,12 @@ const formatHelp = ({ timestamp, label, contents }: FormatData) => {
     const text = indentedBox('', contents, {
         padding: 1,
         borderColor: 'blue',
-        borderStyle: BorderStyle?.Single || 'single'
+        borderStyle: 'single'
     });
     return `${timestamp}${label}\n${text}`;
 };
 
-export const formatLevel = (logMessage: LogMessage) => {
+export const formatLevel = (logMessage: LogMessage): string | void => {
     /*
     const levels = {
         10: 'trace',
@@ -83,9 +82,9 @@ export const formatLevel = (logMessage: LogMessage) => {
     };
      */
 
-    const { type } = logMessage;
+    const { type, name } = logMessage;
     const timestamp = formatTime(logMessage);
-    const label = formatCallee(logMessage);
+    const label = formatCallee(logMessage, name);
     const contents = formatContents(logMessage);
 
     if (type === 'HELP') {

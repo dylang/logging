@@ -2,8 +2,8 @@ const DISABLED = 0;
 const ENABLED = 'error';
 
 module.exports = {
-    parser: "@typescript-eslint/parser",
-    extends: ["plugin:@typescript-eslint/recommended"],
+    parser: '@typescript-eslint/parser',
+    extends: ['plugin:@typescript-eslint/recommended'],
     plugins: [
         // https://github.com/benmosher/eslint-plugin-import
         'import',
@@ -14,30 +14,36 @@ module.exports = {
         '@typescript-eslint'
     ],
     rules: {
-        'prettier/prettier': [ ENABLED, {
-            parser: 'typescript',
-            singleQuote: true,
-            tabWidth: 4,
-            arrowParens: 'always',
-            bracketSpacing: true,
-            jsxBracketSameLine: false,
-            printWidth: 120,
-            semi: true,
-            trailingComma: 'none',
-            useTabs: false
-        } ],
+        'prettier/prettier': [
+            ENABLED,
+            {
+                parser: 'typescript',
+                singleQuote: true,
+                tabWidth: 4,
+                arrowParens: 'always',
+                bracketSpacing: true,
+                jsxBracketSameLine: false,
+                printWidth: 120,
+                semi: true,
+                trailingComma: 'none',
+                useTabs: false
+            }
+        ],
         // handled by prettier
         '@typescript-eslint/indent': DISABLED,
         '@typescript-eslint/explicit-function-return-type': DISABLED,
-        '@typescript-eslint/explicit-member-accessibility': [ ENABLED, {
-            accessibility: 'explicit',
-            overrides: {
-                accessors: 'explicit',
-                constructors: 'no-public',
-                methods: 'explicit',
-                properties: 'explicit',
-                parameterProperties: 'explicit'
+        '@typescript-eslint/explicit-member-accessibility': [
+            ENABLED,
+            {
+                accessibility: 'explicit',
+                overrides: {
+                    accessors: 'explicit',
+                    constructors: 'no-public',
+                    methods: 'explicit',
+                    properties: 'explicit',
+                    parameterProperties: 'explicit'
+                }
             }
-        } ]
+        ]
     }
 };

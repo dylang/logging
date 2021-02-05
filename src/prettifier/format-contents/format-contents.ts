@@ -13,6 +13,7 @@ const getEverythingElse = ({
     time,
     v,
     type,
+    name,
     ...everythingElse
 }: LogMessage) => everythingElse;
 

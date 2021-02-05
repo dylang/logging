@@ -27,11 +27,11 @@ export const formatTime = ({ duration, level, time }: LogMessage) => {
                       ? `${milliseconds < 10 ? ' ' : ''}${milliseconds < 100 ? ' ' : ''}${Math.round(milliseconds)}ms`
                       : ''
               }`;
-    const now = dateFormat(time, 'longTime');
-    const durationString = duration < (logConfig.isDebug ? 100 : 1000) ? '·' : durationAsString;
+    const timeString = dateFormat(time, 'longTime');
+    const durationString = duration < (logConfig.isDebug ? 100 : 100) ? '·' : chalk.yellow(`+${durationAsString}`);
     const annotation = level < 30 ? 'DEBUG' : '';
     return chalk`{bgMagenta.white ${annotation}}{gray ${rightJustify(
-        `${now} ${durationString}`,
+        `${durationString} ${timeString}`,
         logConfig.indent - 1 - annotation.length
     )} }`;
 };
