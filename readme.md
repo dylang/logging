@@ -1,4 +1,4 @@
-# Logging  [![Build Status](https://secure.travis-ci.org/dylang/logging.svg)](https://travis-ci.org/dylang/logging)
+# Logging [![Tests](https://github.com/dylang/logging/actions/workflows/test.yml/badge.svg)](https://github.com/dylang/logging/actions/workflows/test.yml)
 
 > Lightweight informative modern console logging.
 
@@ -18,8 +18,11 @@ yarn add logging
 ## Usage
 
 ```js
-// or const createLogger = require('logging');  
+// ESM
 import createLogger from 'logging';
+
+// CommonJS
+// const createLogger = require('logging');
 
 const logger = createLogger('FeatureName');
 

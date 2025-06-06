@@ -1,5 +1,5 @@
-// Yarn run example
-import logging from '../src';
+// npm run example
+import logging from '../src/index.js';
 
 const log = logging('Feature');
 

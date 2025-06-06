@@ -1,1 +1,1 @@
-export { default } from './logging';
+export { default } from './logging.js';

@@ -1,0 +1,41 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "globals": {
+        "window": true,
+        "document": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "no-use-extend-native",
+        "unicorn",
+        "promise",
+        "import"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:unicorn/recommended"
+    ],
+    "rules": {
+        "no-tabs": [ "error" ],
+        "indent": [ "error", 4 ],
+        "import/no-commonjs": "error",
+        "unicorn/filename-case": 0,
+        "unicorn/no-abusive-eslint-disable": 0,
+        "no-warning-comments": 0,
+        "object-curly-spacing": [ "error", "always" ],
+        "array-bracket-spacing": [ "error", "always", { "arraysInArrays": false } ],
+        "arrow-parens": [ "error", "always" ],
+        "operator-linebreak": [ "error", "after", { "overrides": { "?": "before", ":": "before" } } ],
+        "no-debugger": "warn",
+        "import/order": [ "warn" ]
+    }
+}

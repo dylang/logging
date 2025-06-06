@@ -1,22 +1,33 @@
 {
   "name": "logging",
-  "version": "3.3.0",
+  "version": "5.0.0-beta.1",
   "description": "Lightweight informative modern console logging.",
-  "main": "lib",
+  "type": "module",
+  "main": "lib/index.js",
   "browser": "lib/browser.js",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/cjs/index.cjs",
+      "browser": "./lib/browser.js"
+    }
+  },
   "files": [
     "lib",
     "src",
     "index.d.ts"
   ],
   "scripts": {
-    "start": "babel-node src",
-    "test": "npm -s run lint && ava --verbose && npm -s run example",
-    "update-snapshots": "ava --verbose --update-snapshots",
-    "lint": "eslint -c .eslintrc.js . --fix",
-    "build": "babel src --out-dir=lib",
+    "start": "node src/index.js",
+    "test": "node --experimental-vm-modules node_modules/.bin/ava --verbose && npm -s run example",
+    "update-snapshots": "node --experimental-vm-modules node_modules/ava/cli.js --verbose --update-snapshots",
+    "lint": "eslint -c .eslintrc.json . --fix",
+    "build": "npm run build:esm && npm run build:cjs && npm run build:browser",
+    "build:esm": "babel src --out-dir=lib --extensions='.js' --keep-file-extension",
+    "build:cjs": "babel src --out-dir=lib/cjs --extensions='.js' --out-file-extension=.cjs --plugins=@babel/plugin-transform-modules-commonjs",
+    "build:browser": "babel src/browser.js --out-dir=lib --extensions='.js' --keep-file-extension",
     "outdated": "npm-check -s",
-    "example": "babel-node examples/simple.js",
+    "example": "node examples/simple.js",
     "prepublish": "npm -s run build",
     "precommit": "npm -s run test",
     "np": "np"
@@ -25,39 +36,36 @@
   "author": "Dylan Greene <dylang@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.0",
-    "debug": "^4.3.1",
+    "chalk": "^5.3.0",
+    "debug": "^4.3.4",
     "nicely-format": "^1.1.0"
   },
   "devDependencies": {
-    "ava": "^3.15.0",
-    "babel-cli": "^6.23.0",
-    "babel-core": "^6.23.1",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-env": "^1.1.6",
-    "babel-runtime": "^6.23.0",
-    "eslint": "^7.19.0",
-    "eslint-config-xo": "^0.34.0",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-ava": "^11.0.0",
-    "eslint-plugin-import": "^2.0.1",
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "ava": "^6.0.1",
+    "eslint": "^8.56.0",
+    "eslint-config-xo": "^0.44.0",
+    "eslint-plugin-ava": "^14.0.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-no-use-extend-native": "^0.5.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-unicorn": "^27.0.0",
-    "husky": "^4.3.8",
-    "mockdate": "^3.0.2",
-    "nodemon": "^2.0.7",
-    "np": "^7.2.0",
-    "npm": "^7.5.2",
-    "npm-check": "^5.4.0",
-    "sinon": "^9.2.4"
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-unicorn": "^51.0.1",
+    "husky": "^9.0.11",
+    "mockdate": "^3.0.5",
+    "nodemon": "^3.0.3",
+    "np": "^10.0.0",
+    "npm-check": "^6.0.1",
+    "sinon": "^17.0.1"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 20"
   },
   "ava": {
-    "require": [
-      "babel-register"
+    "nodeArguments": [
+      "--experimental-vm-modules"
     ]
   },
   "publishConfig": {

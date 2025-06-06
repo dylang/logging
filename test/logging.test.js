@@ -1,7 +1,9 @@
 import test from 'ava';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 import mockDate from 'mockdate';
-import createLogger from '../src';
+import createLogger from '../src/index.js';
+
+const { spy } = sinon;
 
 const COMPLEX_OBJECT_FOR_TESTING = [ 'abc123', {
     a: 'apple',

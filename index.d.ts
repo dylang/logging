@@ -5,8 +5,9 @@
  * @param options
  * @returns logger
  */
-declare function logging(moduleName: string, options?: logging.Options): logging.Logger;
-declare namespace logging {
+export default function logging(moduleName: string, options?: logging.Options): logging.Logger;
+
+export namespace logging {
     interface Options {
         debugFunction?(message?: unknown, ...optionalParams: unknown[]): void;
         logFunction?(message?: unknown[]): void;
@@ -17,6 +18,7 @@ declare namespace logging {
         warn: LoggerFunction;
         error: LoggerFunction;
         debug: LoggerFunction;
+        fatal: LoggerFunction;
+        trace: LoggerFunction;
     }
 }
-export = logging;

@@ -4,11 +4,11 @@ import createDebug from 'debug';
 
 const time = () => {
     const now = new Date();
-    const date = new Date(now.getTime() - (now.getTimezoneOffset() * 60000));
+    const date = new Date(now.getTime() - (now.getTimezoneOffset() * 60_000));
     return date.toISOString().replace(/.*T(.*)Z/, '$1');
 };
 
-const indentText = (text) => text.replace(/^(?!\s+$)/gm, ' '.repeat(13)).trim();
+const indentText = (text) => text.replaceAll(/^(?!\s+$)/gm, ' '.repeat(13)).trim();
 
 const logger = ({
     title,
