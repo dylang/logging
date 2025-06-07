@@ -7,7 +7,7 @@
 ## Install
 
 ```sh
-yarn add logging
+pnpm add logging
 ```
 
 ## Features

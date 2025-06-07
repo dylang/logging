@@ -15,14 +15,10 @@
         "sourceType": "module"
     },
     "plugins": [
-        "no-use-extend-native",
-        "unicorn",
-        "promise",
         "import"
     ],
     "extends": [
-        "eslint:recommended",
-        "plugin:unicorn/recommended"
+        "eslint:recommended"
     ],
     "rules": {
         "no-tabs": [ "error" ],

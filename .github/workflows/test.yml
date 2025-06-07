@@ -19,9 +19,11 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build
-    - run: npm run example
+    - uses: pnpm/action-setup@v3
+      with:
+        version: latest
+        run_install: true
+    - run: pnpm build
+    - run: pnpm example
     - name: Run tests
       run: node --experimental-vm-modules node_modules/.bin/ava --verbose
