@@ -21,10 +21,7 @@
     "test": "vitest run && pnpm example",
     "test:watch": "vitest",
     "lint": "eslint -c .eslintrc.json . --fix",
-    "build": "pnpm build:esm && pnpm build:cjs && pnpm build:browser",
-    "build:esm": "babel src --out-dir=lib --extensions='.js' --keep-file-extension",
-    "build:cjs": "babel src --out-dir=lib/cjs --extensions='.js' --out-file-extension=.cjs --plugins=@babel/plugin-transform-modules-commonjs",
-    "build:browser": "babel src/browser.js --out-dir=lib --extensions='.js' --keep-file-extension",
+    "build": "rollup -c",
     "example": "node examples/simple.js",
     "prepublish": "pnpm build"
   },
@@ -37,10 +34,9 @@
     "nicely-format": "^1.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.9",
-    "@babel/core": "^7.23.9",
-    "@babel/preset-env": "^7.23.9",
-    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "rollup": "^4.12.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-commonjs": "^25.0.7",
     "eslint": "^8.56.0",
     "eslint-config-xo": "^0.44.0",
     "eslint-plugin-import": "^2.29.1",
