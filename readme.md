@@ -21,7 +21,7 @@ pnpm add logging
 // ESM only
 import createLogger from 'logging';
 
-const logger = createLogger('FeatureName');
+const logger = createLogger('Feature');
 
 logger.info('Interesting');
 // -> [ Feature ] Interesting
