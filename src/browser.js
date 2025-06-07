@@ -9,7 +9,7 @@ function createLogger(/* title */) {
         error: logger,
         debug: logger,
         fatal: logger,
-        trace: logger
+        trace: logger,
     };
 }
 

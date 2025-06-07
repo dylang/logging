@@ -1,103 +1,98 @@
 import chalk from 'chalk';
-import nicelyFormat from 'nicely-format';
 import createDebug from 'debug';
+import nicelyFormat from 'nicely-format';
 
 const time = () => {
     const now = new Date();
-    const date = new Date(now.getTime() - (now.getTimezoneOffset() * 60_000));
+    const date = new Date(now.getTime() - now.getTimezoneOffset() * 60_000);
     return date.toISOString().replace(/.*T(.*)Z/, '$1');
 };
 
 const indentText = (text) => text.replaceAll(/^(?!\s+$)/gm, ' '.repeat(13)).trim();
 
-const logger = ({
-    title,
-    messages,
-    logFunction
-}) => {
-    const formattedMessages = messages.map((message) => {
-        if (typeof message === 'string') {
-            return message;
-        }
-
-        return nicelyFormat(message, {
-            highlight: true,
-            min: true,
-            theme: {
-                tag: 'cyan',
-                content: 'reset',
-                prop: 'yellow',
-                value: 'green',
-                number: 'green',
-                string: 'reset',
-                date: 'green',
-                symbol: 'red',
-                regex: 'red',
-                function: 'blue',
-                error: 'red',
-                boolean: 'yellow',
-                label: 'blue',
-                bracket: 'grey',
-                comma: 'grey',
-                misc: 'grey',
-                key: 'cyan'
+const logger = ({ title, messages, logFunction }) => {
+    const formattedMessages = messages
+        .map((message) => {
+            if (typeof message === 'string') {
+                return message;
             }
-        });
-    }).map((text) => indentText(text));
+
+            return nicelyFormat(message, {
+                highlight: true,
+                min: true,
+                theme: {
+                    tag: 'cyan',
+                    content: 'reset',
+                    prop: 'yellow',
+                    value: 'green',
+                    number: 'green',
+                    string: 'reset',
+                    date: 'green',
+                    symbol: 'red',
+                    regex: 'red',
+                    function: 'blue',
+                    error: 'red',
+                    boolean: 'yellow',
+                    label: 'blue',
+                    bracket: 'grey',
+                    comma: 'grey',
+                    misc: 'grey',
+                    key: 'cyan',
+                },
+            });
+        })
+        .map((text) => indentText(text));
     logFunction(chalk.gray(time()), `[${title}]`, ...formattedMessages);
 };
 
-const createLogger = (title,
-    {
-        debugFunction = createDebug(title),
-        logFunction = console.log
-    } = {}) => {
+const createLogger = (
+    title,
+    { debugFunction = createDebug(title), logFunction = console.log } = {}
+) => {
     return {
         debug(...messages) {
             logger({
                 title: chalk.yellow(`DEBUG ${title}`),
                 messages,
-                logFunction: debugFunction
+                logFunction: debugFunction,
             });
         },
         info(...messages) {
             logger({
                 title: chalk.blue(title),
                 messages,
-                logFunction
+                logFunction,
             });
         },
         warn(...messages) {
             logger({
                 title: chalk.yellow(`WARNING ${title}`),
                 messages,
-                logFunction
+                logFunction,
             });
         },
         error(...messages) {
             logger({
                 title: chalk.red(`ERROR ${title}`),
                 messages,
-                logFunction
+                logFunction,
             });
         },
         fatal(...messages) {
             logger({
                 title: chalk.red(`========= FATAL ${title} =========`),
                 messages,
-                logFunction
+                logFunction,
             });
         },
         trace(...messages) {
             logger({
                 title: chalk.red(`TRACE ${title}`),
                 messages,
-                logFunction
+                logFunction,
             });
-        }
-
+        },
     };
 };
 
 export default createLogger;
-

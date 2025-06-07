@@ -5,20 +5,25 @@
  * @param options
  * @returns logger
  */
-export default function logging(moduleName: string, options?: logging.Options): logging.Logger;
 
-export namespace logging {
-    interface Options {
-        debugFunction?(message?: unknown, ...optionalParams: unknown[]): void;
-        logFunction?(message?: unknown[]): void;
-    }
-    type LoggerFunction = (...messages: unknown[]) => void;
-    interface Logger {
-        info: LoggerFunction;
-        warn: LoggerFunction;
-        error: LoggerFunction;
-        debug: LoggerFunction;
-        fatal: LoggerFunction;
-        trace: LoggerFunction;
-    }
+// Define interfaces and types outside the namespace to avoid redeclaration
+interface LoggerOptions {
+    debugFunction?(message?: unknown, ...optionalParams: unknown[]): void;
+    logFunction?(message?: unknown[]): void;
 }
+
+type LoggerFunction = (...messages: unknown[]) => void;
+
+interface Logger {
+    info: LoggerFunction;
+    warn: LoggerFunction;
+    error: LoggerFunction;
+    debug: LoggerFunction;
+    fatal: LoggerFunction;
+    trace: LoggerFunction;
+}
+
+/**
+ * Creates a logger with the given module name and options
+ */
+export default function create(moduleName: string, options?: LoggerOptions): Logger;

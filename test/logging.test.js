@@ -1,15 +1,18 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import sinon from 'sinon';
 import mockDate from 'mockdate';
+import sinon from 'sinon';
+import { beforeAll, describe, expect, it } from 'vitest';
 import createLogger from '../src/index.js';
 
 const { spy } = sinon;
 
-const COMPLEX_OBJECT_FOR_TESTING = [ 'abc123', {
-    a: 'apple',
-    b: 'bear',
-    c: [ 'cookies', 'cake', 'calculators', { abc: 123, def: 'jhi', klm: true, pqr: false } ]
-} ];
+const COMPLEX_OBJECT_FOR_TESTING = [
+    'abc123',
+    {
+        a: 'apple',
+        b: 'bear',
+        c: ['cookies', 'cake', 'calculators', { abc: 123, def: 'jhi', klm: true, pqr: false }],
+    },
+];
 
 beforeAll(() => {
     mockDate.set('1/1/2017');

@@ -1,53 +1,50 @@
 {
-  "name": "logging",
-  "version": "5.0.0-beta.1",
-  "description": "Lightweight informative modern console logging.",
-  "type": "module",
-  "main": "lib/index.js",
-  "browser": "lib/browser.js",
-  "exports": {
-    ".": {
-      "import": "./lib/index.js",
-      "require": "./lib/cjs/index.cjs",
-      "browser": "./lib/browser.js"
+    "name": "logging",
+    "version": "5.0.0-beta.1",
+    "description": "Lightweight informative modern console logging.",
+    "type": "module",
+    "main": "lib/index.js",
+    "browser": "lib/browser.js",
+    "exports": {
+        ".": {
+            "import": "./lib/index.js",
+            "require": "./lib/cjs/index.cjs",
+            "browser": "./lib/browser.js"
+        }
+    },
+    "files": ["lib", "index.d.ts"],
+    "scripts": {
+        "start": "node src/index.js",
+        "test": "vitest run && pnpm example",
+        "test:watch": "vitest",
+        "format": "biome format --write .",
+        "check": "biome check .",
+        "lint": "biome check --apply .",
+        "build": "rollup -c",
+        "example": "node examples/simple.js",
+        "prepublish": "pnpm build"
+    },
+    "repository": "http://github.com/dylang/logging",
+    "author": "Dylan Greene <dylang@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "chalk": "^5.3.0",
+        "debug": "^4.3.4",
+        "nicely-format": "^1.1.0"
+    },
+    "devDependencies": {
+        "rollup": "^4.12.0",
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-commonjs": "^25.0.7",
+        "@biomejs/biome": "1.7.0",
+        "mockdate": "^3.0.5",
+        "sinon": "^17.0.1",
+        "vitest": "^1.1.0"
+    },
+    "engines": {
+        "node": ">= 20"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org"
     }
-  },
-  "files": [
-    "lib",
-    "index.d.ts"
-  ],
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "vitest run && pnpm example",
-    "test:watch": "vitest",
-    "lint": "eslint -c .eslintrc.json . --fix",
-    "build": "rollup -c",
-    "example": "node examples/simple.js",
-    "prepublish": "pnpm build"
-  },
-  "repository": "http://github.com/dylang/logging",
-  "author": "Dylan Greene <dylang@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "chalk": "^5.3.0",
-    "debug": "^4.3.4",
-    "nicely-format": "^1.1.0"
-  },
-  "devDependencies": {
-    "rollup": "^4.12.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "eslint": "^8.56.0",
-    "eslint-config-xo": "^0.44.0",
-    "eslint-plugin-import": "^2.29.1",
-    "mockdate": "^3.0.5",
-    "sinon": "^17.0.1",
-    "vitest": "^1.1.0"
-  },
-  "engines": {
-    "node": ">= 20"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
-  }
 }

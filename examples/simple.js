@@ -19,6 +19,6 @@ object.circularReference = object;
 object[Symbol('foo')] = 'foo';
 object.map = new Map();
 object.map.set('prop', 'value');
-object.array = [ 1, Number.NaN, Number.POSITIVE_INFINITY ];
+object.array = [1, Number.NaN, Number.POSITIVE_INFINITY];
 
 log.info(object);
