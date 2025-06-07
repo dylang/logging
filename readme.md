@@ -18,11 +18,8 @@ pnpm add logging
 ## Usage
 
 ```js
-// ESM
+// ESM only
 import createLogger from 'logging';
-
-// CommonJS
-// const createLogger = require('logging');
 
 const logger = createLogger('FeatureName');
 

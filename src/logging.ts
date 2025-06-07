@@ -95,7 +95,7 @@ const logger = ({ title, messages, logFunction }: LoggerParams): void => {
     logFunction(chalk.gray(time()), `[${title}]`, ...formattedMessages);
 };
 
-const createLogger = (
+export const createLogger = (
     title: string,
     { debugFunction = createDebug(title), logFunction = console.log }: LoggerOptions = {}
 ): Logger => {
@@ -145,4 +145,4 @@ const createLogger = (
     };
 };
 
-export default createLogger;
+

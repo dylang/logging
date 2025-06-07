@@ -8,7 +8,6 @@
     "exports": {
         ".": {
             "import": "./lib/index.js",
-            "require": "./lib/cjs/index.cjs",
             "browser": "./lib/browser.js"
         }
     },
@@ -21,12 +20,11 @@
         "check": "biome check .",
         "lint": "biome check --apply .",
         "typecheck": "tsc --noEmit",
-        "build": "tsc -p tsconfig.build.json && pnpm build:cjs",
-        "build:cjs": "tsc -p tsconfig.build.json --outDir ./lib/cjs --module commonjs --moduleResolution node",
+        "build": "tsc -p tsconfig.build.json",
         "example": "node lib/index.js",
         "prepublish": "pnpm typecheck && pnpm build"
     },
-    "repository": "http://github.com/dylang/logging",
+    "repository": "https://github.com/dylang/logging",
     "author": "Dylan Greene <dylang@gmail.com>",
     "license": "MIT",
     "dependencies": {
