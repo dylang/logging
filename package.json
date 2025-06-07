@@ -12,34 +12,45 @@
             "browser": "./lib/browser.js"
         }
     },
-    "files": ["lib", "index.d.ts"],
+    "files": [
+        "lib",
+        "index.d.ts"
+    ],
     "scripts": {
-        "start": "node src/index.js",
+        "start": "node lib/index.js",
         "test": "vitest run && pnpm example",
         "test:watch": "vitest",
         "format": "biome format --write .",
         "check": "biome check .",
         "lint": "biome check --apply .",
-        "build": "rollup -c",
-        "example": "node examples/simple.js",
-        "prepublish": "pnpm build"
+        "typecheck": "tsc --noEmit",
+        "build": "tsc -p tsconfig.build.json && pnpm build:cjs",
+        "build:cjs": "tsc -p tsconfig.build.json --outDir ./lib/cjs --module commonjs --moduleResolution node",
+        "example": "node lib/index.js",
+        "prepublish": "pnpm typecheck && pnpm build"
     },
     "repository": "http://github.com/dylang/logging",
     "author": "Dylan Greene <dylang@gmail.com>",
     "license": "MIT",
     "dependencies": {
-        "chalk": "^5.3.0",
-        "debug": "^4.3.4",
+        "chalk": "^5.4.1",
+        "debug": "^4.4.1",
         "nicely-format": "^1.1.0"
     },
     "devDependencies": {
-        "rollup": "^4.12.0",
-        "@rollup/plugin-node-resolve": "^15.2.3",
-        "@rollup/plugin-commonjs": "^25.0.7",
         "@biomejs/biome": "1.7.0",
+        "@rollup/plugin-commonjs": "^28.0.3",
+        "@rollup/plugin-node-resolve": "^16.0.1",
+        "@rollup/plugin-typescript": "^12.1.2",
+        "@types/debug": "^4.1.12",
+        "@types/sinon": "^17.0.4",
         "mockdate": "^3.0.5",
-        "sinon": "^17.0.1",
-        "vitest": "^1.1.0"
+        "rollup": "^4.42.0",
+        "sinon": "^20.0.0",
+        "ts-node": "^10.9.2",
+        "tslib": "^2.8.1",
+        "typescript": "^5.8.3",
+        "vitest": "^3.2.2"
     },
     "engines": {
         "node": ">= 20"

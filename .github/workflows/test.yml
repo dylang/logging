@@ -23,7 +23,8 @@ jobs:
       with:
         version: latest
         run_install: true
+    - run: pnpm typecheck
+    - run: pnpm lint
     - run: pnpm build
-    - run: pnpm example
     - name: Run tests
       run: pnpm test

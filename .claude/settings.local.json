@@ -8,7 +8,8 @@
       "Bash(npm run lint:*)",
       "Bash(rm:*)",
       "Bash(pnpm:*)",
-      "Bash(pnpm test:*)"
+      "Bash(pnpm test:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

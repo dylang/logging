@@ -1,18 +1,67 @@
-import chalk from 'chalk';
+import chalk, { type ChalkInstance } from 'chalk';
 import createDebug from 'debug';
 import nicelyFormat from 'nicely-format';
 
-const time = () => {
+// Define types inline
+export type LoggerFunction = (...messages: unknown[]) => void;
+
+export interface Logger {
+    debug: LoggerFunction;
+    info: LoggerFunction;
+    warn: LoggerFunction;
+    error: LoggerFunction;
+    fatal: LoggerFunction;
+    trace: LoggerFunction;
+}
+
+export interface LoggerOptions {
+    debugFunction?: (...params: unknown[]) => void;
+    logFunction?: (...params: unknown[]) => void;
+}
+
+interface FormatTheme {
+    tag: string;
+    content: string;
+    prop: string;
+    value: string;
+    number: string;
+    string: string;
+    date: string;
+    symbol: string;
+    regex: string;
+    function: string;
+    error: string;
+    boolean: string;
+    label: string;
+    bracket: string;
+    comma: string;
+    misc: string;
+    key: string;
+}
+
+interface FormatOptions {
+    highlight: boolean;
+    min: boolean;
+    theme: FormatTheme;
+}
+
+interface LoggerParams {
+    title: string | ChalkInstance;
+    messages: unknown[];
+    logFunction: (...params: unknown[]) => void;
+}
+
+const time = (): string => {
     const now = new Date();
     const date = new Date(now.getTime() - now.getTimezoneOffset() * 60_000);
     return date.toISOString().replace(/.*T(.*)Z/, '$1');
 };
 
-const indentText = (text) => text.replaceAll(/^(?!\s+$)/gm, ' '.repeat(13)).trim();
+const indentText = (text: string): string => text.replace(/^(?!\s+$)/gm, ' '.repeat(13)).trim();
 
-const logger = ({ title, messages, logFunction }) => {
+const logger = ({ title, messages, logFunction }: LoggerParams): void => {
     const formattedMessages = messages
-        .map((message) => {
+        .map((message: unknown) => {
             if (typeof message === 'string') {
                 return message;
             }
@@ -39,53 +88,54 @@ const logger = ({ title, messages, logFunction }) => {
                     misc: 'grey',
                     key: 'cyan',
                 },
-            });
+            } as FormatOptions);
         })
-        .map((text) => indentText(text));
+        .map((text: string) => indentText(text));
+
     logFunction(chalk.gray(time()), `[${title}]`, ...formattedMessages);
 };
 
 const createLogger = (
-    title,
-    { debugFunction = createDebug(title), logFunction = console.log } = {}
-) => {
+    title: string,
+    { debugFunction = createDebug(title), logFunction = console.log }: LoggerOptions = {}
+): Logger => {
     return {
-        debug(...messages) {
+        debug(...messages: unknown[]): void {
             logger({
                 title: chalk.yellow(`DEBUG ${title}`),
                 messages,
                 logFunction: debugFunction,
             });
         },
-        info(...messages) {
+        info(...messages: unknown[]): void {
             logger({
                 title: chalk.blue(title),
                 messages,
                 logFunction,
             });
         },
-        warn(...messages) {
+        warn(...messages: unknown[]): void {
             logger({
                 title: chalk.yellow(`WARNING ${title}`),
                 messages,
                 logFunction,
             });
         },
-        error(...messages) {
+        error(...messages: unknown[]): void {
             logger({
                 title: chalk.red(`ERROR ${title}`),
                 messages,
                 logFunction,
             });
         },
-        fatal(...messages) {
+        fatal(...messages: unknown[]): void {
             logger({
                 title: chalk.red(`========= FATAL ${title} =========`),
                 messages,
                 logFunction,
             });
         },
-        trace(...messages) {
+        trace(...messages: unknown[]): void {
             logger({
                 title: chalk.red(`TRACE ${title}`),
                 messages,

@@ -1,7 +1,7 @@
 import mockDate from 'mockdate';
 import sinon from 'sinon';
 import { beforeAll, describe, expect, it } from 'vitest';
-import createLogger from '../src/index.js';
+import createLogger, { type LoggerFunction } from '../src/index.js';
 
 const { spy } = sinon;
 
@@ -29,8 +29,8 @@ describe('logging', () => {
     });
 
     it('log info', () => {
-        const logFunction = spy();
-        const { info } = createLogger('logging.test', { logFunction });
+        const logFunction: sinon.SinonSpy<unknown[], void> = spy();
+        const { info } = createLogger('logging.test', { logFunction: logFunction as unknown as LoggerFunction });
         info(...COMPLEX_OBJECT_FOR_TESTING);
 
         const logOutput = logFunction.getCall(0).args;
@@ -38,8 +38,8 @@ describe('logging', () => {
     });
 
     it('log warning', () => {
-        const logFunction = spy();
-        const { warn } = createLogger('logging.test', { logFunction });
+        const logFunction: sinon.SinonSpy<unknown[], void> = spy();
+        const { warn } = createLogger('logging.test', { logFunction: logFunction as unknown as LoggerFunction });
         warn(...COMPLEX_OBJECT_FOR_TESTING);
 
         const logOutput = logFunction.getCall(0).args;
@@ -47,8 +47,8 @@ describe('logging', () => {
     });
 
     it('log error', () => {
-        const logFunction = spy();
-        const { error } = createLogger('logging.test', { logFunction });
+        const logFunction: sinon.SinonSpy<unknown[], void> = spy();
+        const { error } = createLogger('logging.test', { logFunction: logFunction as unknown as LoggerFunction });
         error(...COMPLEX_OBJECT_FOR_TESTING);
 
         const logOutput = logFunction.getCall(0).args;
