@@ -1,0 +1,46 @@
+name: Publish Pre-release
+
+on:
+  pull_request:
+    branches: [ master ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - uses: pnpm/action-setup@v3
+        with:
+          version: latest
+          run_install: true
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm build
+      - name: Run tests
+        run: pnpm test
+      
+      - name: Get PR commit count
+        id: pr_commits
+        run: |
+          count=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits | length')
+          echo "commit_count=$count" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Update version for pre-release
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          PRERELEASE_VERSION="${PACKAGE_VERSION}-pr${{ github.event.number }}.${{ steps.pr_commits.outputs.commit_count }}"
+          npm version $PRERELEASE_VERSION --no-git-tag-version
+          echo "Publishing version: $PRERELEASE_VERSION"
+          
+      - name: Publish pre-release to npm
+        run: pnpm publish --tag pr --no-git-checks --no-otp
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -14,11 +14,11 @@ log.warn('Hmmm...', 123, false, { details });
 log.error('Not good.', 'Not good at all.', { err: error }, { context }, { etc });
 log.info('This\nwill\nspan\nmultiple\nlines.');
 
-const object = { property: {} };
+const object: Record<string, unknown> = { property: {} };
 object.circularReference = object;
-object[Symbol('foo')] = 'foo';
+object[Symbol('foo') as unknown as string] = 'foo';
 object.map = new Map();
-object.map.set('prop', 'value');
+(object.map as Map<string, string>).set('prop', 'value');
 object.array = [1, Number.NaN, Number.POSITIVE_INFINITY];
 
 log.info(object);
