@@ -30,7 +30,9 @@ describe('logging', () => {
 
     it('log info', () => {
         const logFunction: sinon.SinonSpy<unknown[], void> = spy();
-        const { info } = createLogger('logging.test', { logFunction: logFunction as unknown as LoggerFunction });
+        const { info } = createLogger('logging.test', {
+            logFunction: logFunction as unknown as LoggerFunction,
+        });
         info(...COMPLEX_OBJECT_FOR_TESTING);
 
         const logOutput = logFunction.getCall(0).args;
@@ -39,7 +41,9 @@ describe('logging', () => {
 
     it('log warning', () => {
         const logFunction: sinon.SinonSpy<unknown[], void> = spy();
-        const { warn } = createLogger('logging.test', { logFunction: logFunction as unknown as LoggerFunction });
+        const { warn } = createLogger('logging.test', {
+            logFunction: logFunction as unknown as LoggerFunction,
+        });
         warn(...COMPLEX_OBJECT_FOR_TESTING);
 
         const logOutput = logFunction.getCall(0).args;
@@ -48,7 +52,9 @@ describe('logging', () => {
 
     it('log error', () => {
         const logFunction: sinon.SinonSpy<unknown[], void> = spy();
-        const { error } = createLogger('logging.test', { logFunction: logFunction as unknown as LoggerFunction });
+        const { error } = createLogger('logging.test', {
+            logFunction: logFunction as unknown as LoggerFunction,
+        });
         error(...COMPLEX_OBJECT_FOR_TESTING);
 
         const logOutput = logFunction.getCall(0).args;

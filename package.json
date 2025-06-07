@@ -12,10 +12,7 @@
             "browser": "./lib/browser.js"
         }
     },
-    "files": [
-        "lib",
-        "index.d.ts"
-    ],
+    "files": ["lib", "index.d.ts"],
     "scripts": {
         "start": "node lib/index.js",
         "test": "vitest run && pnpm example",

@@ -1,5 +1,5 @@
 declare module 'nicely-format' {
-    function nicelyFormat(value: unknown, options: any): string;
-    
+    function nicelyFormat(value: unknown, options: unknown): string;
+
     export default nicelyFormat;
 }
