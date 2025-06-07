@@ -1,6 +1,6 @@
 {
     "name": "logging",
-    "version": "5.0.0-beta.1",
+    "version": "5.0.0",
     "description": "Lightweight informative modern console logging.",
     "type": "module",
     "main": "lib/index.js",
