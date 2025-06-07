@@ -18,8 +18,8 @@
   ],
   "scripts": {
     "start": "node src/index.js",
-    "test": "node --experimental-vm-modules node_modules/.bin/ava --verbose && pnpm example",
-    "update-snapshots": "node --experimental-vm-modules node_modules/.bin/ava --verbose --update-snapshots",
+    "test": "vitest run && pnpm example",
+    "test:watch": "vitest",
     "lint": "eslint -c .eslintrc.json . --fix",
     "build": "pnpm build:esm && pnpm build:cjs && pnpm build:browser",
     "build:esm": "babel src --out-dir=lib --extensions='.js' --keep-file-extension",
@@ -41,20 +41,15 @@
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
-    "ava": "^6.0.1",
     "eslint": "^8.56.0",
     "eslint-config-xo": "^0.44.0",
     "eslint-plugin-import": "^2.29.1",
     "mockdate": "^3.0.5",
-    "sinon": "^17.0.1"
+    "sinon": "^17.0.1",
+    "vitest": "^1.1.0"
   },
   "engines": {
     "node": ">= 20"
-  },
-  "ava": {
-    "nodeArguments": [
-      "--experimental-vm-modules"
-    ]
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

@@ -1,4 +1,4 @@
-import test from 'ava';
+import { describe, it, expect, beforeAll } from 'vitest';
 import sinon from 'sinon';
 import mockDate from 'mockdate';
 import createLogger from '../src/index.js';
@@ -11,52 +11,44 @@ const COMPLEX_OBJECT_FOR_TESTING = [ 'abc123', {
     c: [ 'cookies', 'cake', 'calculators', { abc: 123, def: 'jhi', klm: true, pqr: false } ]
 } ];
 
-mockDate.set('1/1/2017');
-
-test('log debug', (t) => {
-    const debugFunction = spy();
-    const { debug } = createLogger('logging.test', { debugFunction });
-    debug(...COMPLEX_OBJECT_FOR_TESTING);
-
-    const logOutput = debugFunction.getCall(0).args;
-    t.truthy(logOutput);
-
-    // Snapshots broken https://github.com/avajs/ava/issues/1218
-    // t.snapshot(logOutput);
+beforeAll(() => {
+    mockDate.set('1/1/2017');
 });
 
-test('log info', (t) => {
-    const logFunction = spy();
-    const { info } = createLogger('logging.test', { logFunction });
-    info(...COMPLEX_OBJECT_FOR_TESTING);
+describe('logging', () => {
+    it('log debug', () => {
+        const debugFunction = spy();
+        const { debug } = createLogger('logging.test', { debugFunction });
+        debug(...COMPLEX_OBJECT_FOR_TESTING);
 
-    const logOutput = logFunction.getCall(0).args;
-    t.truthy(logOutput);
+        const logOutput = debugFunction.getCall(0).args;
+        expect(logOutput).toBeTruthy();
+    });
 
-    // Snapshots broken https://github.com/avajs/ava/issues/1218
-    // t.snapshot(logFunction.getCall(0).args);
-});
+    it('log info', () => {
+        const logFunction = spy();
+        const { info } = createLogger('logging.test', { logFunction });
+        info(...COMPLEX_OBJECT_FOR_TESTING);
 
-test('log warning', (t) => {
-    const logFunction = spy();
-    const { warn } = createLogger('logging.test', { logFunction });
-    warn(...COMPLEX_OBJECT_FOR_TESTING);
+        const logOutput = logFunction.getCall(0).args;
+        expect(logOutput).toBeTruthy();
+    });
 
-    const logOutput = logFunction.getCall(0).args;
-    t.truthy(logOutput);
+    it('log warning', () => {
+        const logFunction = spy();
+        const { warn } = createLogger('logging.test', { logFunction });
+        warn(...COMPLEX_OBJECT_FOR_TESTING);
 
-    // Snapshots broken https://github.com/avajs/ava/issues/1218
-    // t.snapshot(logFunction.getCall(0).args);
-});
+        const logOutput = logFunction.getCall(0).args;
+        expect(logOutput).toBeTruthy();
+    });
 
-test('log error', (t) => {
-    const logFunction = spy();
-    const { error } = createLogger('logging.test', { logFunction });
-    error(...COMPLEX_OBJECT_FOR_TESTING);
+    it('log error', () => {
+        const logFunction = spy();
+        const { error } = createLogger('logging.test', { logFunction });
+        error(...COMPLEX_OBJECT_FOR_TESTING);
 
-    const logOutput = logFunction.getCall(0).args;
-    t.truthy(logOutput);
-
-    // Snapshots broken https://github.com/avajs/ava/issues/1218
-    // t.snapshot(logFunction.getCall(0).args);
+        const logOutput = logFunction.getCall(0).args;
+        expect(logOutput).toBeTruthy();
+    });
 });

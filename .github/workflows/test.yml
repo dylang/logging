@@ -26,4 +26,4 @@ jobs:
     - run: pnpm build
     - run: pnpm example
     - name: Run tests
-      run: node --experimental-vm-modules node_modules/.bin/ava --verbose
+      run: pnpm test

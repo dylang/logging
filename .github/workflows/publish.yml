@@ -19,7 +19,7 @@ jobs:
           run_install: true
       - run: pnpm build
       - name: Run tests
-        run: node --experimental-vm-modules node_modules/.bin/ava --verbose
+        run: pnpm test
       - run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
