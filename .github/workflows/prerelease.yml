@@ -37,6 +37,6 @@ jobs:
           echo "Publishing version: $PRERELEASE_VERSION"
           
       - name: Publish pre-release to npm
-        run: pnpm publish --tag pr --no-git-checks
+        run: pnpm publish --tag pr --no-git-checks --no-otp
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
