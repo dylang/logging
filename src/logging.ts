@@ -10,8 +10,6 @@ export interface Logger {
     info: LoggerFunction;
     warn: LoggerFunction;
     error: LoggerFunction;
-    fatal: LoggerFunction;
-    trace: LoggerFunction;
 }
 
 export interface LoggerOptions {
@@ -124,20 +122,6 @@ export const createLogger = (
         error(...messages: unknown[]): void {
             logger({
                 title: chalk.red(`ERROR ${title}`),
-                messages,
-                logFunction,
-            });
-        },
-        fatal(...messages: unknown[]): void {
-            logger({
-                title: chalk.red(`========= FATAL ${title} =========`),
-                messages,
-                logFunction,
-            });
-        },
-        trace(...messages: unknown[]): void {
-            logger({
-                title: chalk.red(`TRACE ${title}`),
                 messages,
                 logFunction,
             });

@@ -56,7 +56,7 @@ The `logging` package is a lightweight console logging library designed for Node
 ### Core Components
 
 1. **Main Logger Implementation (`src/logging.js`):**
-   - Creates a logger with different log levels: debug, info, warn, error, fatal, trace
+   - Creates a logger with different log levels: debug, info, warn, error
    - Uses chalk for colorized output
    - Uses nicely-format for formatting complex objects
    - Integrates with the debug module for debug-level logs

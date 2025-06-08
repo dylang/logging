@@ -10,8 +10,6 @@ function createLogger(/* title */): Logger {
         warn: logger,
         error: logger,
         debug: logger,
-        fatal: logger,
-        trace: logger,
     };
 }
 
