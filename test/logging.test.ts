@@ -60,4 +60,52 @@ describe('logging', () => {
         const logOutput = logFunction.getCall(0).args;
         expect(logOutput).toBeTruthy();
     });
+
+    it('creates a child logger', () => {
+        const logFunction = spy();
+        const parentLogger = createLogger('parent', {
+            logFunction: logFunction as unknown as LoggerFunction,
+        });
+        const childLogger = parentLogger.child('child');
+
+        expect(childLogger).toBeTypeOf('object');
+        expect(childLogger.info).toBeTypeOf('function');
+        expect(childLogger.warn).toBeTypeOf('function');
+        expect(childLogger.error).toBeTypeOf('function');
+        expect(childLogger.debug).toBeTypeOf('function');
+        expect(childLogger.child).toBeTypeOf('function');
+    });
+
+    it('formats child logger output correctly', () => {
+        const logFunction: sinon.SinonSpy<unknown[], void> = spy();
+        const parentLogger = createLogger('parent', {
+            logFunction: logFunction as unknown as LoggerFunction,
+        });
+        const childLogger = parentLogger.child('child');
+        childLogger.info('test message from child');
+
+        expect(logFunction.calledOnce).toBe(true);
+        // args[0] is the timestamp '00:00:00.000'
+        // args[1] is the title, e.g., chalk.blue('parent:child')
+        // args[2] is the formatted message
+        expect(logFunction.getCall(0).args[1]).toContain('parent:child');
+        expect(logFunction.getCall(0).args[2]).toContain('test message from child');
+    });
+
+    it('formats grandchild logger output correctly', () => {
+        const logFunction: sinon.SinonSpy<unknown[], void> = spy();
+        const parentLogger = createLogger('parent', {
+            logFunction: logFunction as unknown as LoggerFunction,
+        });
+        const childLogger = parentLogger.child('child');
+        const grandchildLogger = childLogger.child('grandchild');
+        grandchildLogger.info('test message from grandchild');
+
+        expect(logFunction.calledOnce).toBe(true);
+        // args[0] is the timestamp '00:00:00.000'
+        // args[1] is the title, e.g., chalk.blue('parent:child:grandchild')
+        // args[2] is the formatted message
+        expect(logFunction.getCall(0).args[1]).toContain('parent:child:grandchild');
+        expect(logFunction.getCall(0).args[2]).toContain('test message from grandchild');
+    });
 });
