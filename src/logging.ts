@@ -10,6 +10,7 @@ export interface Logger {
     info: LoggerFunction;
     warn: LoggerFunction;
     error: LoggerFunction;
+    child: (childName: string) => Logger;
 }
 
 export interface LoggerOptions {
@@ -125,6 +126,9 @@ export const createLogger = (
                 messages,
                 logFunction,
             });
+        },
+        child(childName: string): Logger {
+            return createLogger(`${title}:${childName}`, { debugFunction, logFunction });
         },
     };
 };
